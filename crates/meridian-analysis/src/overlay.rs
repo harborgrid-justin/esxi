@@ -1,8 +1,7 @@
 //! Overlay operations for geometric intersection, union, difference
 
-use crate::error::{AnalysisError, Result};
-use geo::{Area, Contains, Intersects, MultiPolygon, Polygon};
-use geo_booleanop::boolean::BooleanOp;
+use crate::error::Result;
+use geo::{Area, BooleanOps, Contains, Intersects, MultiPolygon, Polygon};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -21,26 +20,22 @@ pub enum OverlayOp {
 
 /// Compute the union of two polygons
 pub fn union(a: &Polygon, b: &Polygon) -> Result<MultiPolygon> {
-    a.union(b)
-        .map_err(|e| AnalysisError::OverlayError(format!("Union failed: {:?}", e)))
+    Ok(a.union(b))
 }
 
 /// Compute the intersection of two polygons
 pub fn intersection(a: &Polygon, b: &Polygon) -> Result<MultiPolygon> {
-    a.intersection(b)
-        .map_err(|e| AnalysisError::OverlayError(format!("Intersection failed: {:?}", e)))
+    Ok(a.intersection(b))
 }
 
 /// Compute the difference of two polygons (A - B)
 pub fn difference(a: &Polygon, b: &Polygon) -> Result<MultiPolygon> {
-    a.difference(b)
-        .map_err(|e| AnalysisError::OverlayError(format!("Difference failed: {:?}", e)))
+    Ok(a.difference(b))
 }
 
 /// Compute the symmetric difference of two polygons
 pub fn symmetric_difference(a: &Polygon, b: &Polygon) -> Result<MultiPolygon> {
-    a.xor(b)
-        .map_err(|e| AnalysisError::OverlayError(format!("Symmetric difference failed: {:?}", e)))
+    Ok(a.xor(b))
 }
 
 /// Perform an overlay operation on two polygons

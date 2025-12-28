@@ -9,7 +9,7 @@ use quick_xml::{Reader as XmlReader, Writer as XmlWriter};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::fs::File;
-use std::io::{BufWriter, Read};
+use std::io::{BufWriter, Read, Write};
 use std::path::Path;
 use zip::ZipArchive;
 
@@ -25,7 +25,7 @@ impl KmlReader {
     /// Parse KML content
     fn parse_kml(content: &str) -> Result<FeatureCollection> {
         let mut reader = XmlReader::from_str(content);
-        reader.trim_text(true);
+        reader.config_mut().trim_text(true);
 
         let mut features = Vec::new();
         let mut buf = Vec::new();
@@ -80,7 +80,7 @@ impl KmlReader {
                         in_placemark = false;
                     }
                 }
-                Ok(Event::Text(e)) if in_placemark => {
+                Ok(Event::Text(_e)) if in_placemark => {
                     // This would need more sophisticated parsing to extract name/description
                     // For now, we'll use a simplified approach
                 }

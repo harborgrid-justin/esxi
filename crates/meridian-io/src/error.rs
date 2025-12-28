@@ -127,11 +127,7 @@ impl From<zip::result::ZipError> for IoError {
     }
 }
 
-impl From<wkt::WktError> for IoError {
-    fn from(err: wkt::WktError) -> Self {
-        IoError::Wkt(err.to_string())
-    }
-}
+// WKT errors are handled via string conversion in the parser
 
 impl From<serde_json::Error> for IoError {
     fn from(err: serde_json::Error) -> Self {

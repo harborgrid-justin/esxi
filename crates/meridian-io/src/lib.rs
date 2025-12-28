@@ -150,16 +150,18 @@ impl FormatRegistry {
     }
 
     /// Get writer for format
-    pub fn get_writer(format: Format) -> Box<dyn Writer> {
-        match format {
-            Format::GeoJson => Box::new(GeoJsonWriter::new()),
-            Format::Shapefile => Box::new(ShapefileWriter::new()),
-            Format::Kml => Box::new(KmlWriter::new()),
-            Format::Wkt => Box::new(WktWriter::new()),
-            Format::Csv => Box::new(CsvWriter::new()),
-            _ => Box::new(GeoJsonWriter::new()), // Default fallback
-        }
-    }
+    /// Note: This function is commented out because Writer trait is not object-safe
+    /// due to the generic write_stream method. Use concrete writer types instead.
+    // pub fn get_writer(format: Format) -> Box<dyn Writer> {
+    //     match format {
+    //         Format::GeoJson => Box::new(GeoJsonWriter::new()),
+    //         Format::Shapefile => Box::new(ShapefileWriter::new()),
+    //         Format::Kml => Box::new(KmlWriter::new()),
+    //         Format::Wkt => Box::new(WktWriter::new()),
+    //         Format::Csv => Box::new(CsvWriter::new()),
+    //         _ => Box::new(GeoJsonWriter::new()), // Default fallback
+    //     }
+    // }
 
     /// List all supported formats
     pub fn supported_formats() -> Vec<Format> {

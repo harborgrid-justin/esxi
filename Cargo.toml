@@ -1,6 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
+    # Core Platform Crates (v0.1.0)
     "crates/meridian-core",
     "crates/meridian-db",
     "crates/meridian-server",
@@ -11,10 +12,22 @@ members = [
     "crates/meridian-cli",
     "crates/meridian-sdk",
     "crates/meridian-stream",
+
+    # Enterprise Features (v0.1.5)
+    "crates/meridian-metrics",
+    "crates/meridian-cache",
+    "crates/meridian-workflow",
+    "crates/meridian-tenant",
+    "crates/meridian-governance",
+    "crates/meridian-search",
+    "crates/meridian-plugin",
+    "crates/meridian-events",
+    "crates/meridian-crypto",
+    "crates/meridian-backup",
 ]
 
 [workspace.package]
-version = "0.1.0"
+version = "0.1.5"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/meridian-gis/meridian"

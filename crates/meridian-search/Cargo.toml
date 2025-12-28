@@ -1,0 +1,58 @@
+[package]
+name = "meridian-search"
+version = "0.1.5"
+edition = "2021"
+license = "MIT"
+description = "Enterprise search system for Meridian GIS Platform with Elasticsearch integration"
+repository = "https://github.com/meridian-gis/meridian"
+
+[dependencies]
+# Elasticsearch
+elasticsearch = "8.5.0-alpha.1"
+
+# Async runtime
+tokio = { workspace = true }
+async-trait = { workspace = true }
+futures = "0.3"
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+anyhow = "1"
+
+# Utilities
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+
+# Geo-spatial
+geo = "0.27"
+geo-types = "0.7"
+geojson = { version = "0.24", features = ["geo-types"] }
+
+# URL and HTTP
+url = "2"
+reqwest = { version = "0.11", features = ["json"] }
+
+# Connection pooling
+deadpool = "0.10"
+
+# Metrics and analytics
+metrics = "0.21"
+metrics-exporter-prometheus = "0.13"
+
+# Hashing
+fnv = "1"
+seahash = "4"
+
+# Text processing
+unicode-segmentation = "1"
+whatlang = "0.16"
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockito = "1"
+test-log = "0.2"

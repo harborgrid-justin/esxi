@@ -448,7 +448,7 @@ mod tests {
         ]);
 
         let simplified = simplify_line_douglas_peucker(&line, 0.5).unwrap();
-        assert!(simplified.coords_count() <= line.coords_count());
+        assert!(simplified.0.len() <= line.0.len());
     }
 
     #[test]
@@ -461,7 +461,7 @@ mod tests {
         ]);
 
         let simplified = simplify_by_vertex_reduction(&line, 1.0).unwrap();
-        assert!(simplified.coords_count() < line.coords_count());
+        assert!(simplified.0.len() < line.0.len());
     }
 
     #[test]
@@ -475,7 +475,7 @@ mod tests {
         ]);
 
         let smoothed = smooth_line_moving_average(&line, 3).unwrap();
-        assert_eq!(smoothed.coords_count(), line.coords_count());
+        assert_eq!(smoothed.0.len(), line.0.len());
     }
 
     #[test]
@@ -483,7 +483,7 @@ mod tests {
         let line = LineString::from(vec![(0.0, 0.0), (10.0, 0.0), (10.0, 10.0)]);
 
         let smoothed = smooth_line_chaikin(&line, 1).unwrap();
-        assert!(smoothed.coords_count() > line.coords_count());
+        assert!(smoothed.0.len() > line.0.len());
     }
 
     #[test]
@@ -491,7 +491,7 @@ mod tests {
         let line = LineString::from(vec![(0.0, 0.0), (10.0, 0.0)]);
 
         let densified = densify_line(&line, 2.0).unwrap();
-        assert!(densified.coords_count() > line.coords_count());
+        assert!(densified.0.len() > line.0.len());
     }
 
     #[test]
@@ -512,6 +512,6 @@ mod tests {
         let line2 = LineString::from(vec![(5.0, 0.0), (10.0, 0.0)]);
 
         let merged = merge_lines(&[line1, line2]).unwrap();
-        assert_eq!(merged.coords_count(), 3); // Shared point should not be duplicated
+        assert_eq!(merged.0.len(), 3); // Shared point should not be duplicated
     }
 }

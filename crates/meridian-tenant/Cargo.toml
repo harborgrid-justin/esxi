@@ -1,0 +1,67 @@
+[package]
+name = "meridian-tenant"
+version = "0.1.5"
+edition = "2021"
+authors = ["Meridian Team"]
+description = "Multi-tenant architecture system for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian/meridian-tenant"
+keywords = ["gis", "multi-tenant", "saas", "isolation"]
+categories = ["database", "web-programming"]
+
+[dependencies]
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+async-trait = "0.1"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "json"], optional = true }
+
+# UUID and time
+uuid = { version = "1.6", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+lazy_static = "1.4"
+regex = "1.10"
+
+# Hashing and security
+sha2 = "0.10"
+hex = "0.4"
+
+# Configuration
+config = "0.13"
+
+# Metrics and tracing
+tracing = "0.1"
+metrics = "0.21"
+
+# HTTP (for routing middleware)
+axum = { version = "0.7", optional = true }
+tower = { version = "0.4", optional = true }
+hyper = { version = "1.0", optional = true }
+
+# Feature flags
+bitflags = "2.4"
+
+# Decimal for billing
+rust_decimal = { version = "1.33", features = ["serde"] }
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockall = "0.12"
+
+[features]
+default = ["postgres", "http"]
+postgres = ["sqlx"]
+http = ["axum", "tower", "hyper"]
+full = ["postgres", "http"]

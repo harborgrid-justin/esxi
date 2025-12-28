@@ -115,11 +115,11 @@ pub fn validate_line(line: &LineString) -> ValidationResult {
     let mut result = ValidationResult::valid();
 
     // Check minimum vertices
-    if line.coords_count() < 2 {
+    if line.0.len() < 2 {
         result.add_issue(ValidationIssue::new(
             IssueType::InsufficientVertices,
             Severity::Error,
-            format!("Line must have at least 2 vertices, got {}", line.coords_count()),
+            format!("Line must have at least 2 vertices, got {}", line.0.len()),
         ));
         return result;
     }
@@ -184,11 +184,11 @@ pub fn validate_polygon(polygon: &Polygon) -> ValidationResult {
     }
 
     // Check minimum vertices (4 for a closed ring: 3 unique + closing)
-    if exterior.coords_count() < 4 {
+    if exterior.0.len() < 4 {
         result.add_issue(ValidationIssue::new(
             IssueType::InsufficientVertices,
             Severity::Error,
-            format!("Exterior ring must have at least 4 vertices, got {}", exterior.coords_count()),
+            format!("Exterior ring must have at least 4 vertices, got {}", exterior.0.len()),
         ));
     }
 
@@ -220,7 +220,7 @@ pub fn validate_polygon(polygon: &Polygon) -> ValidationResult {
             ));
         }
 
-        if interior.coords_count() < 4 {
+        if interior.0.len() < 4 {
             result.add_issue(ValidationIssue::new(
                 IssueType::InsufficientVertices,
                 Severity::Error,
@@ -261,7 +261,7 @@ pub fn validate_polygon(polygon: &Polygon) -> ValidationResult {
 
 /// Check if a ring is closed (first and last coordinates are equal)
 fn is_ring_closed(ring: &LineString) -> bool {
-    if ring.coords_count() < 2 {
+    if ring.0.len() < 2 {
         return false;
     }
 
@@ -602,7 +602,7 @@ mod tests {
         ]);
 
         let cleaned = remove_duplicate_vertices(&ring);
-        assert!(cleaned.coords_count() < ring.coords_count());
+        assert!(cleaned.0.len() < ring.0.len());
     }
 
     #[test]

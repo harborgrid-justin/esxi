@@ -172,7 +172,7 @@ impl GeoPackageReader {
             return Err(IoError::GeoPackage("Invalid GeoPackage geometry: header overflow".to_string()));
         }
 
-        let wkb_data = &data[wkb_offset..];
+        let _wkb_data = &data[wkb_offset..];
 
         // Parse WKB using wkt crate (it also supports WKB)
         // For now, we'll use a simplified approach
@@ -253,7 +253,7 @@ impl Reader for GeoPackageReader {
             }
 
             // Get geometry type
-            if let Ok(geom_col) = self.get_geometry_column(&conn, layer) {
+            if let Ok(_geom_col) = self.get_geometry_column(&conn, layer) {
                 let query = format!(
                     "SELECT geometry_type_name FROM gpkg_geometry_columns WHERE table_name = ?",
                 );

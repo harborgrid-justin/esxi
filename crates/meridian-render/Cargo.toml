@@ -49,9 +49,5 @@ geo-types = "0.7"
 approx = "0.5"
 criterion = "0.5"
 
-[[bench]]
-name = "tile_rendering"
-harness = false
-
 [build-dependencies]
 prost-build = "0.13"

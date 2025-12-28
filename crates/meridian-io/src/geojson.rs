@@ -31,7 +31,7 @@ impl GeoJsonReader {
             None
         };
 
-        let properties = gj_feature.properties
+        let properties: std::collections::HashMap<String, Value> = gj_feature.properties
             .unwrap_or_default()
             .into_iter()
             .collect();
@@ -53,14 +53,10 @@ impl GeoJsonReader {
     }
 
     /// Parse CRS from GeoJSON
-    fn parse_crs(gj_crs: &Option<geojson::Crs>) -> Option<String> {
-        gj_crs.as_ref().and_then(|crs| {
-            if let geojson::Crs::Named { name } = crs {
-                Some(name.clone())
-            } else {
-                None
-            }
-        })
+    /// Note: CRS support was removed from geojson crate in newer versions
+    fn parse_crs(_gj_crs: &Option<String>) -> Option<String> {
+        // CRS handling is deprecated in GeoJSON spec
+        None
     }
 }
 
@@ -196,7 +192,11 @@ impl GeoJsonWriter {
             None
         };
 
-        let properties = Some(feature.properties.clone());
+        let properties: Option<serde_json::Map<String, Value>> = Some(
+            feature.properties.iter()
+                .map(|(k, v)| (k.clone(), v.clone()))
+                .collect()
+        );
 
         Ok(geojson::Feature {
             bbox: None,
@@ -262,7 +262,7 @@ impl Writer for GeoJsonWriter {
         Ok(())
     }
 
-    fn write_stream<S>(&self, path: &Path, mut stream: S) -> Result<()>
+    fn write_stream<S>(&self, path: &Path, stream: S) -> Result<()>
     where
         S: Stream<Item = Result<Feature>> + Send + 'static,
     {
@@ -275,6 +275,7 @@ impl Writer for GeoJsonWriter {
             .map_err(|e| IoError::Other(format!("Failed to create runtime: {}", e)))?;
 
         rt.block_on(async {
+            let mut stream = Box::pin(stream);
             while let Some(result) = stream.next().await {
                 let feature = result?;
                 let gj_feature = Self::convert_feature(&feature)?;

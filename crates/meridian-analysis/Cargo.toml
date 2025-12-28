@@ -1,0 +1,46 @@
+[package]
+name = "meridian-analysis"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Spatial analysis and geoprocessing for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Geometric algorithms and operations
+geo = "0.28"
+geo-booleanop = "0.3"
+geo-types = "0.7"
+
+# Delaunay triangulation and Voronoi diagrams
+spade = "2.9"
+
+# Network analysis
+petgraph = "0.6"
+
+# Parallel processing
+rayon = "1.10"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+
+# Math operations
+num-traits = "0.2"
+
+# Meridian dependencies
+meridian-core = { path = "../meridian-core" }
+
+[dev-dependencies]
+approx = "0.5"
+criterion = "0.5"
+
+[[bench]]
+name = "analysis_benchmarks"
+harness = false

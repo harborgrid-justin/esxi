@@ -1,0 +1,70 @@
+[package]
+name = "meridian-server"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian Team"]
+description = "REST API and OGC services for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Web framework
+axum = { version = "0.7", features = ["macros", "multipart", "ws"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace", "compression-full", "timeout", "limit"] }
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+futures = "0.3"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# UUID support
+uuid = { version = "1.6", features = ["serde", "v4"] }
+
+# Logging and tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# HTTP
+hyper = "1.0"
+hyper-util = "0.1"
+http = "1.0"
+http-body-util = "0.1"
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Validation
+validator = { version = "0.18", features = ["derive"] }
+
+# Environment and config
+config = "0.14"
+dotenv = "0.15"
+
+# Rate limiting
+governor = "0.6"
+dashmap = "5.5"
+
+# OpenAPI/Swagger
+utoipa = { version = "4.2", features = ["axum_extras", "uuid"] }
+utoipa-swagger-ui = { version = "6.0", features = ["axum"] }
+
+# Internal dependencies
+meridian-core = { path = "../meridian-core" }
+meridian-db = { path = "../meridian-db" }
+meridian-auth = { path = "../meridian-auth" }
+meridian-render = { path = "../meridian-render" }
+meridian-analysis = { path = "../meridian-analysis" }
+meridian-io = { path = "../meridian-io" }
+meridian-stream = { path = "../meridian-stream" }
+
+[dev-dependencies]
+tower = { version = "0.4", features = ["util"] }
+axum-test = "14.0"
+mockall = "0.12"

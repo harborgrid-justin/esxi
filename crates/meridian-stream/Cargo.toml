@@ -1,0 +1,45 @@
+[package]
+name = "meridian-stream"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Real-time data streaming and collaboration for the Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian-gis/meridian"
+keywords = ["gis", "geospatial", "websocket", "streaming", "real-time"]
+categories = ["web-programming::websocket", "science::geo"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.40", features = ["full"] }
+
+# WebSocket support
+tokio-tungstenite = "0.23"
+futures-util = { version = "0.3", default-features = false, features = ["sink", "std"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Identifiers
+uuid = { version = "1.10", features = ["v4", "serde"] }
+
+# Concurrent data structures
+dashmap = "6.1"
+
+# Error handling
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+
+# Internal dependencies
+meridian-core = { path = "../meridian-core" }
+
+[dev-dependencies]
+tokio-test = "0.4"
+tracing-subscriber = "0.3"
+
+[lib]
+name = "meridian_stream"
+path = "src/lib.rs"

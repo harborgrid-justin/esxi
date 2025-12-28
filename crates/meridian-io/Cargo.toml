@@ -1,0 +1,76 @@
+[package]
+name = "meridian-io"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Format import/export for the Meridian GIS Platform - supporting Shapefile, GeoJSON, GeoTIFF, KML, GeoPackage, and more"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian-gis/meridian"
+keywords = ["gis", "geospatial", "io", "shapefile", "geojson"]
+categories = ["science::geo", "parser-implementations"]
+
+[dependencies]
+# Core dependency
+meridian-core = { path = "../meridian-core" }
+
+# Geometry and geo types
+geo = "0.28"
+geo-types = "0.7"
+
+# Shapefile support
+shapefile = "0.6"
+
+# GeoJSON support
+geojson = { version = "0.24", features = ["geo-types"] }
+
+# KML/GML parsing
+quick-xml = { version = "0.36", features = ["serialize"] }
+
+# GeoTIFF support
+tiff = "0.9"
+
+# CSV support
+csv = "1.3"
+
+# Compression (for KMZ, compressed shapefiles, etc.)
+zip = "0.6"
+
+# SQLite for GeoPackage
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# WKT/WKB support
+wkt = "0.11"
+
+# Async I/O
+tokio = { version = "1.35", features = ["full"] }
+tokio-util = { version = "0.7", features = ["io"] }
+futures = "0.3"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Utilities
+bytes = "1.5"
+encoding_rs = "0.8"
+
+# GDAL (optional feature for advanced format support)
+[dependencies.gdal]
+version = "0.16"
+optional = true
+
+[dev-dependencies]
+tempfile = "3.8"
+tokio-test = "0.4"
+
+[features]
+default = []
+gdal-support = ["gdal"]
+
+[lib]
+name = "meridian_io"
+path = "src/lib.rs"

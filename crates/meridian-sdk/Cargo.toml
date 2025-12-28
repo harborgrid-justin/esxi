@@ -1,0 +1,41 @@
+[package]
+name = "meridian-sdk"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Client SDK for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian-gis/meridian"
+keywords = ["gis", "geospatial", "sdk", "client"]
+categories = ["api-bindings", "science::geo"]
+
+[dependencies]
+# HTTP client
+reqwest = { version = "0.11", features = ["json", "rustls-tls"], default-features = false }
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+
+# URL handling
+url = "2.5"
+
+# Optional features
+geojson = { version = "0.24", optional = true }
+
+# Meridian core types (for shared geometry types)
+meridian-core = { path = "../meridian-core", optional = true }
+
+[dev-dependencies]
+tokio-test = "0.4"
+wiremock = "0.6"
+
+[features]
+default = ["geojson"]
+core = ["meridian-core"]

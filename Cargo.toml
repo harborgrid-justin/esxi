@@ -1,0 +1,30 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/meridian-core",
+    "crates/meridian-db",
+    "crates/meridian-server",
+    "crates/meridian-render",
+    "crates/meridian-analysis",
+    "crates/meridian-auth",
+    "crates/meridian-io",
+    "crates/meridian-cli",
+    "crates/meridian-sdk",
+    "crates/meridian-stream",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/meridian-gis/meridian"
+
+[workspace.dependencies]
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+tracing = "0.1"
+async-trait = "0.1"

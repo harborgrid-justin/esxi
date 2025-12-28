@@ -1,0 +1,38 @@
+[package]
+name = "meridian-core"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Core geometry and spatial primitives for the Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian-gis/meridian"
+keywords = ["gis", "geospatial", "geometry", "spatial", "mapping"]
+categories = ["science::geo"]
+
+[dependencies]
+# Geometry primitives
+geo = { version = "0.28", features = ["use-serde"] }
+geo-types = { version = "0.7", features = ["serde"] }
+
+# Spatial indexing
+rstar = "0.12"
+
+# Coordinate transformations
+proj = "0.27"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+
+# Numeric traits
+num-traits = "0.2"
+
+[dev-dependencies]
+approx = "0.5"
+
+[lib]
+name = "meridian_core"
+path = "src/lib.rs"

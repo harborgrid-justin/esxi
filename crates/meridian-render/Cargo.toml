@@ -1,0 +1,57 @@
+[package]
+name = "meridian-render"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Map tile generation and rendering engine for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Core dependency
+meridian-core = { path = "../meridian-core" }
+
+# Image processing
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "webp"] }
+
+# SVG rendering
+resvg = "0.43"
+usvg = "0.43"
+
+# 2D graphics
+tiny-skia = "0.11"
+
+# Protobuf for MVT
+prost = "0.13"
+prost-types = "0.13"
+
+# Compression
+flate2 = "1.0"
+
+# Parallel processing
+rayon = "1.10"
+
+# Caching
+lru = "0.12"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+
+# Additional utilities
+byteorder = "1.5"
+geo = "0.28"
+geo-types = "0.7"
+
+[dev-dependencies]
+approx = "0.5"
+criterion = "0.5"
+
+[[bench]]
+name = "tile_rendering"
+harness = false
+
+[build-dependencies]
+prost-build = "0.13"

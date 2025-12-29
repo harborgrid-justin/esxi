@@ -129,7 +129,7 @@ impl TransactionManager {
     /// Execute with retry on transient failures
     pub async fn execute_with_retry<F, T>(&self, max_retries: u32, f: F) -> DbResult<T>
     where
-        F: Fn(&mut Transaction<'_, Postgres>) -> std::pin::Pin<Box<dyn std::future::Future<Output = DbResult<T>> + Send + '_>> + Send + Sync,
+        F: for<'a> Fn(&'a mut Transaction<'_, Postgres>) -> std::pin::Pin<Box<dyn std::future::Future<Output = DbResult<T>> + Send + 'a>> + Send + Sync,
         T: Send,
     {
         let mut attempts = 0;

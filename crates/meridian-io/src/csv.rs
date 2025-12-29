@@ -8,7 +8,7 @@ use geo_types::{Geometry, Point};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::fs::File;
-use std::io::{BufWriter, Write as _};
+use std::io::BufWriter;
 use std::path::Path;
 
 /// CSV coordinate column detection configuration

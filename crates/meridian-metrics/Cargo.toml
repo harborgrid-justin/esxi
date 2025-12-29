@@ -1,0 +1,87 @@
+[package]
+name = "meridian-metrics"
+version = "0.1.5"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Enterprise metrics and telemetry system for the Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian-gis/meridian"
+keywords = ["gis", "metrics", "telemetry", "observability", "prometheus"]
+categories = ["science::geo", "development-tools::profiling"]
+
+[dependencies]
+# OpenTelemetry
+opentelemetry = { version = "0.22", features = ["trace", "metrics"] }
+opentelemetry-otlp = { version = "0.15", features = ["trace", "metrics", "grpc-tonic"] }
+opentelemetry_sdk = { version = "0.22", features = ["rt-tokio"] }
+opentelemetry-semantic-conventions = "0.14"
+
+# Prometheus
+prometheus = { version = "0.13", features = ["process"] }
+prometheus-client = "0.22"
+
+# Metrics
+metrics = "0.22"
+metrics-exporter-prometheus = "0.13"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["net"] }
+
+# WebSocket support
+tokio-tungstenite = "0.21"
+tungstenite = "0.21"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+tracing-opentelemetry = "0.23"
+
+# HTTP
+axum = { version = "0.7", features = ["ws"] }
+tower = { version = "0.4", features = ["timeout"] }
+tower-http = { version = "0.5", features = ["trace", "cors"] }
+hyper = "1.0"
+
+# Concurrency
+parking_lot = "0.12"
+dashmap = "5.5"
+
+# Async utilities
+async-trait = "0.1"
+futures = "0.3"
+futures-util = "0.3"
+
+# System metrics
+sysinfo = "0.30"
+
+# Profiling
+pprof = { version = "0.13", features = ["flamegraph", "protobuf-codec"] }
+
+# UUIDs
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Statistics
+hdrhistogram = "7.5"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["async_tokio"] }
+tokio-test = "0.4"
+tempfile = "3.8"
+wiremock = "0.6"
+
+[lib]
+name = "meridian_metrics"
+path = "src/lib.rs"
+

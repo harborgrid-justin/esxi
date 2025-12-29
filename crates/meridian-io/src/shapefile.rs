@@ -2,7 +2,7 @@
 
 use crate::error::{IoError, Result};
 use crate::traits::{Feature, FeatureCollection, FeatureStream, Metadata, Reader, Writer};
-use futures::{stream, Stream, StreamExt};
+use futures::{stream, Stream};
 use geo_types::Geometry;
 use serde_json::Value;
 use std::collections::HashMap;
@@ -34,9 +34,10 @@ impl ShapefileReader {
                 Ok(Some(Geometry::Point(geo_types::Point::new(p.x, p.y))))
             }
             Shape::Polyline(pl) => {
-                if pl.parts().len() == 1 {
+                let parts = pl.parts();
+                if parts.len() == 1 {
                     // Single LineString
-                    let coords: Vec<_> = pl.points()
+                    let coords: Vec<_> = parts[0]
                         .iter()
                         .map(|p| geo_types::Coord { x: p.x, y: p.y })
                         .collect();
@@ -44,58 +45,62 @@ impl ShapefileReader {
                 } else {
                     // MultiLineString
                     let mut lines = Vec::new();
-                    for part in pl.parts() {
+                    for part in parts {
                         let coords: Vec<_> = part
                             .iter()
                             .map(|p| geo_types::Coord { x: p.x, y: p.y })
                             .collect();
                         lines.push(geo_types::LineString::from(coords));
                     }
-                    Ok(Some(Geometry::MultiLineString(geo_types::MultiLineString::from(lines))))
+                    Ok(Some(Geometry::MultiLineString(geo_types::MultiLineString::new(lines))))
                 }
             }
             Shape::PolylineM(pl) => {
-                if pl.parts().len() == 1 {
-                    let coords: Vec<_> = pl.points()
+                let parts = pl.parts();
+                if parts.len() == 1 {
+                    let coords: Vec<_> = parts[0]
                         .iter()
                         .map(|p| geo_types::Coord { x: p.x, y: p.y })
                         .collect();
                     Ok(Some(Geometry::LineString(geo_types::LineString::from(coords))))
                 } else {
                     let mut lines = Vec::new();
-                    for part in pl.parts() {
+                    for part in parts {
                         let coords: Vec<_> = part
                             .iter()
                             .map(|p| geo_types::Coord { x: p.x, y: p.y })
                             .collect();
                         lines.push(geo_types::LineString::from(coords));
                     }
-                    Ok(Some(Geometry::MultiLineString(geo_types::MultiLineString::from(lines))))
+                    Ok(Some(Geometry::MultiLineString(geo_types::MultiLineString::new(lines))))
                 }
             }
             Shape::PolylineZ(pl) => {
-                if pl.parts().len() == 1 {
-                    let coords: Vec<_> = pl.points()
+                let parts = pl.parts();
+                if parts.len() == 1 {
+                    let coords: Vec<_> = parts[0]
                         .iter()
                         .map(|p| geo_types::Coord { x: p.x, y: p.y })
                         .collect();
                     Ok(Some(Geometry::LineString(geo_types::LineString::from(coords))))
                 } else {
                     let mut lines = Vec::new();
-                    for part in pl.parts() {
+                    for part in parts {
                         let coords: Vec<_> = part
                             .iter()
                             .map(|p| geo_types::Coord { x: p.x, y: p.y })
                             .collect();
                         lines.push(geo_types::LineString::from(coords));
                     }
-                    Ok(Some(Geometry::MultiLineString(geo_types::MultiLineString::from(lines))))
+                    Ok(Some(Geometry::MultiLineString(geo_types::MultiLineString::new(lines))))
                 }
             }
             Shape::Polygon(pg) => {
-                if pg.parts().len() == 1 {
+                let rings = pg.rings();
+                if rings.len() == 1 {
                     // Single Polygon
-                    let exterior: Vec<_> = pg.parts()[0]
+                    let exterior: Vec<_> = rings[0]
+                        .points()
                         .iter()
                         .map(|p| geo_types::Coord { x: p.x, y: p.y })
                         .collect();
@@ -109,8 +114,9 @@ impl ShapefileReader {
                     // Note: Shapefile polygon parts can be exterior rings or holes
                     // This is a simplified conversion
                     let mut polygons = Vec::new();
-                    for part in pg.parts() {
-                        let coords: Vec<_> = part
+                    for ring in rings {
+                        let coords: Vec<_> = ring
+                            .points()
                             .iter()
                             .map(|p| geo_types::Coord { x: p.x, y: p.y })
                             .collect();
@@ -125,8 +131,9 @@ impl ShapefileReader {
             }
             Shape::PolygonM(pg) => {
                 let mut polygons = Vec::new();
-                for part in pg.parts() {
-                    let coords: Vec<_> = part
+                for ring in pg.rings() {
+                    let coords: Vec<_> = ring
+                        .points()
                         .iter()
                         .map(|p| geo_types::Coord { x: p.x, y: p.y })
                         .collect();
@@ -144,8 +151,9 @@ impl ShapefileReader {
             }
             Shape::PolygonZ(pg) => {
                 let mut polygons = Vec::new();
-                for part in pg.parts() {
-                    let coords: Vec<_> = part
+                for ring in pg.rings() {
+                    let coords: Vec<_> = ring
+                        .points()
                         .iter()
                         .map(|p| geo_types::Coord { x: p.x, y: p.y })
                         .collect();
@@ -295,7 +303,7 @@ impl Reader for ShapefileReader {
         metadata.geometry_types.push(geom_type);
 
         // Feature count (requires reading all records)
-        let count = shapefile::Reader::from_path(path)?.iter_shapes().count();
+        let count = shapefile::Reader::from_path(path)?.iter_shapes_and_records().count();
         metadata.feature_counts.insert("default".to_string(), count);
 
         Ok(metadata)

@@ -22,7 +22,7 @@ impl WktReader {
     /// Parse WKT string to geometry
     pub fn parse_wkt(wkt_str: &str) -> Result<Geometry<f64>> {
         let wkt: Wkt<f64> = wkt_str.parse()
-            .map_err(|e: wkt::WktError| IoError::Wkt(e.to_string()))?;
+            .map_err(|e| IoError::Wkt(format!("WKT parse error: {:?}", e)))?;
 
         // Convert WKT to geo_types
         let geom: Geometry<f64> = wkt.try_into()
@@ -163,8 +163,9 @@ impl WktWriter {
 
     /// Convert geometry to WKT string
     pub fn geometry_to_wkt(geom: &Geometry<f64>) -> Result<String> {
-        let wkt: Wkt<f64> = geom.into();
-        Ok(wkt.to_string())
+        // Use the wkt crate's conversion from geo_types
+        use wkt::ToWkt;
+        Ok(geom.wkt_string())
     }
 }
 

@@ -162,7 +162,7 @@ pub fn buffer_points(points: &[Point], params: &BufferParams) -> Result<Vec<Poly
 pub fn buffer_line(line: &LineString, params: &BufferParams) -> Result<Polygon> {
     params.validate()?;
 
-    if line.coords_count() < 2 {
+    if line.0.len() < 2 {
         return Err(AnalysisError::invalid_geometry(
             "Line must have at least 2 points",
         ));
@@ -324,7 +324,7 @@ pub fn variable_buffer(
     distances: &[f64],
     params: &BufferParams,
 ) -> Result<Polygon> {
-    if line.coords_count() != distances.len() {
+    if line.0.len() != distances.len() {
         return Err(AnalysisError::invalid_parameters(
             "Number of distances must match number of line points",
         ));
@@ -332,7 +332,7 @@ pub fn variable_buffer(
 
     params.validate()?;
 
-    if line.coords_count() < 2 {
+    if line.0.len() < 2 {
         return Err(AnalysisError::invalid_geometry(
             "Line must have at least 2 points",
         ));
@@ -412,7 +412,7 @@ mod tests {
         let params = BufferParams::new(10.0);
         let buffer = buffer_point(&point, &params).unwrap();
 
-        assert!(buffer.exterior().coords_count() > 4);
+        assert!(buffer.exterior().0.len() > 4);
     }
 
     #[test]
@@ -433,7 +433,7 @@ mod tests {
         let params = BufferParams::new(1.0);
         let buffer = buffer_line(&line, &params).unwrap();
 
-        assert!(buffer.exterior().coords_count() > 3);
+        assert!(buffer.exterior().0.len() > 3);
     }
 
     #[test]
@@ -443,7 +443,7 @@ mod tests {
         let params = BufferParams::default();
         let buffer = variable_buffer(&line, &distances, &params).unwrap();
 
-        assert!(buffer.exterior().coords_count() > 3);
+        assert!(buffer.exterior().0.len() > 3);
     }
 
     #[test]

@@ -1,0 +1,63 @@
+[package]
+name = "meridian-governance"
+version = "0.1.5"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Data governance, lineage tracking, and compliance management for the Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian-gis/meridian"
+keywords = ["gis", "governance", "compliance", "data-lineage", "gdpr"]
+categories = ["database", "data-structures"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+async-trait = "0.1"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_yaml = "0.9"
+
+# Date/Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# UUID generation
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Graph algorithms for lineage
+petgraph = { version = "0.6", features = ["serde-1"] }
+
+# Hashing and crypto for data masking
+sha2 = "0.10"
+blake3 = "1.5"
+ring = "0.17"
+base64 = "0.21"
+
+# Regex for pattern matching
+regex = "1.10"
+
+# Data validation
+validator = { version = "0.16", features = ["derive"] }
+
+# Collections
+indexmap = { version = "2.1", features = ["serde"] }
+dashmap = "5.5"
+
+# Logging and tracing
+tracing = "0.1"
+
+# Schema and data structures
+schemars = { version = "0.8", features = ["chrono", "uuid1"] }
+
+[dev-dependencies]
+tokio-test = "0.4"
+proptest = "1.4"
+
+[lib]
+name = "meridian_governance"
+path = "src/lib.rs"

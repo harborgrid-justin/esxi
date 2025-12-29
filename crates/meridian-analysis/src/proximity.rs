@@ -4,7 +4,7 @@ use crate::error::{AnalysisError, Result};
 use geo::{Coord, EuclideanDistance, LineString, Point, Polygon};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
-use spade::{DelaunayTriangulation, HasPosition, Point2};
+use spade::{DelaunayTriangulation, HasPosition, Point2, Triangulation};
 use std::collections::HashMap;
 
 /// A point with an associated ID for proximity analysis
@@ -197,7 +197,7 @@ pub fn voronoi_diagram(points: &[Point]) -> Result<Vec<Polygon>> {
         .collect();
 
     // Create Delaunay triangulation
-    let mut triangulation = FloatDelaunayTriangulation::new();
+    let mut triangulation = DelaunayTriangulation::<IndexedPoint>::new();
 
     for point in indexed_points.iter() {
         triangulation
@@ -233,9 +233,9 @@ pub fn voronoi_diagram(points: &[Point]) -> Result<Vec<Polygon>> {
 }
 
 /// Compute Voronoi cell for a vertex (simplified)
-fn compute_voronoi_cell<T: HasPosition<Scalar = f64>>(
+fn compute_voronoi_cell<T: HasPosition<Scalar = f64>, V>(
     _triangulation: &DelaunayTriangulation<T>,
-    _vertex: spade::handles::FixedVertexHandle,
+    _vertex: V,
 ) -> Vec<Point2<f64>> {
     // Simplified implementation
     // In production, would properly compute Voronoi cell from dual of Delaunay

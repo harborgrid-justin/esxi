@@ -41,6 +41,3 @@ meridian-core = { path = "../meridian-core" }
 approx = "0.5"
 criterion = "0.5"
 
-[[bench]]
-name = "analysis_benchmarks"
-harness = false

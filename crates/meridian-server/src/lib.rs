@@ -11,6 +11,7 @@ pub mod state;
 
 use axum::Router;
 use std::net::SocketAddr;
+use std::time::Duration;
 use tower_http::{
     compression::CompressionLayer,
     cors::CorsLayer,
@@ -18,6 +19,7 @@ use tower_http::{
     trace::TraceLayer,
 };
 use tracing::{info, warn};
+use utoipa::OpenApi;
 
 pub use config::ServerConfig;
 pub use error::{ServerError, ServerResult};
@@ -45,6 +47,9 @@ pub async fn init_server(config: ServerConfig) -> ServerResult<Router> {
 
 /// Build the main application router with all routes and middleware
 fn build_router(state: AppState, config: &ServerConfig) -> ServerResult<Router> {
+    // Build CORS layer
+    let cors = build_cors_layer(config)?;
+
     let app = Router::new()
         // API routes
         .nest("/api/v1", routes::api_routes())
@@ -54,30 +59,16 @@ fn build_router(state: AppState, config: &ServerConfig) -> ServerResult<Router> 
         .nest("/health", routes::health_routes())
         // OpenAPI documentation
         .merge(utoipa_swagger_ui::SwaggerUi::new("/swagger-ui")
-            .url("/api-docs/openapi.json", routes::ApiDoc::openapi()))
+            .url("/api-docs/openapi.json", <routes::ApiDoc as OpenApi>::openapi()))
         // Add application state
         .with_state(state)
-        // Add middleware layers
-        .layer(build_middleware_stack(config)?);
+        // Add middleware layers directly
+        .layer(TraceLayer::new_for_http())
+        .layer(CompressionLayer::new())
+        .layer(TimeoutLayer::new(Duration::from_secs(config.request_timeout_secs)))
+        .layer(cors);
 
     Ok(app)
-}
-
-/// Build the middleware stack for the application
-fn build_middleware_stack(config: &ServerConfig) -> ServerResult<tower::layer::util::Stack<TraceLayer, tower::layer::util::Stack<CompressionLayer, tower::layer::util::Stack<TimeoutLayer, CorsLayer>>>> {
-    use std::time::Duration;
-
-    let cors = build_cors_layer(config)?;
-    let timeout = TimeoutLayer::new(Duration::from_secs(config.request_timeout_secs));
-    let compression = CompressionLayer::new();
-    let trace = TraceLayer::new_for_http();
-
-    Ok(tower::ServiceBuilder::new()
-        .layer(cors)
-        .layer(timeout)
-        .layer(compression)
-        .layer(trace)
-        .into_inner())
 }
 
 /// Build CORS layer from configuration
@@ -90,15 +81,23 @@ fn build_cors_layer(config: &ServerConfig) -> ServerResult<CorsLayer> {
         cors = cors.allow_origin(Any);
     } else {
         // Parse allowed origins
-        for origin in &config.cors.allowed_origins {
-            cors = cors.allow_origin(origin.parse()
-                .map_err(|e| ServerError::Configuration(format!("Invalid CORS origin '{}': {}", origin, e)))?);
-        }
+        let origins: Vec<http::HeaderValue> = config.cors.allowed_origins.iter()
+            .filter_map(|o| o.parse().ok())
+            .collect();
+        cors = cors.allow_origin(origins);
     }
 
-    cors = cors
-        .allow_methods(config.cors.allowed_methods.clone())
-        .allow_headers(config.cors.allowed_headers.clone());
+    // Convert method strings to Method types
+    let methods: Vec<http::Method> = config.cors.allowed_methods.iter()
+        .filter_map(|m| m.parse().ok())
+        .collect();
+    cors = cors.allow_methods(methods);
+
+    // Convert header strings to HeaderName types
+    let headers: Vec<http::header::HeaderName> = config.cors.allowed_headers.iter()
+        .filter_map(|h| h.parse().ok())
+        .collect();
+    cors = cors.allow_headers(headers);
 
     if config.cors.allow_credentials {
         cors = cors.allow_credentials(true);

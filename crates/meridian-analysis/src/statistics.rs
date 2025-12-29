@@ -407,8 +407,8 @@ pub fn k_means_clustering(points: &[Point], k: usize, max_iterations: usize) -> 
                 .iter()
                 .enumerate()
                 .min_by(|(_, c1), (_, c2)| {
-                    let d1 = point.euclidean_distance(c1);
-                    let d2 = point.euclidean_distance(c2);
+                    let d1 = point.euclidean_distance(*c1);
+                    let d2 = point.euclidean_distance(*c2);
                     d1.partial_cmp(&d2).unwrap_or(std::cmp::Ordering::Equal)
                 })
                 .map(|(idx, _)| idx)
@@ -537,7 +537,7 @@ fn find_neighbors(points: &[Point], index: usize, epsilon: f64) -> Vec<usize> {
         .iter()
         .enumerate()
         .filter(|(i, point)| {
-            *i != index && points[index].euclidean_distance(point) <= epsilon
+            *i != index && points[index].euclidean_distance(*point) <= epsilon
         })
         .map(|(i, _)| i)
         .collect()

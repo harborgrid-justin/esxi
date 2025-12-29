@@ -1,0 +1,61 @@
+[package]
+name = "meridian-dashboard"
+version = "0.2.5"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Analytics dashboard and reporting system for Meridian GIS Platform"
+license = "MIT"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+
+# Web framework
+axum = { version = "0.7", features = ["ws", "multipart"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "mysql", "sqlite", "chrono", "uuid"] }
+
+# Time handling
+chrono = { version = "0.4", features = ["serde"] }
+
+# UUID generation
+uuid = { version = "1.6", features = ["v4", "serde"] }
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Async utilities
+futures = "0.3"
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json"] }
+
+# PDF generation
+printpdf = "0.7"
+
+# Excel generation
+rust_xlsxwriter = "0.64"
+
+# Scheduling
+tokio-cron-scheduler = "0.10"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+
+[dev-dependencies]
+mockall = "0.12"
+tempfile = "3.8"
+
+[lib]
+name = "meridian_dashboard"
+path = "src/lib.rs"

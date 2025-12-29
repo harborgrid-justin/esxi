@@ -206,7 +206,7 @@ impl<B: CacheBackend + 'static> CacheWarmer<B> {
     async fn warmup_prioritized<S: WarmupSource + 'static>(
         &self,
         source: Arc<S>,
-        mut keys: Vec<String>,
+        keys: Vec<String>,
         stats: &mut WarmupStats,
     ) -> CacheResult<()> {
         // For now, use eager strategy

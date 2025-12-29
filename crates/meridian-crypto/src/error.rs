@@ -3,7 +3,6 @@
 //! This module provides comprehensive error handling for all cryptographic operations,
 //! including encryption, key management, HSM operations, and audit logging.
 
-use std::fmt;
 use thiserror::Error;
 
 /// Result type alias for cryptographic operations.

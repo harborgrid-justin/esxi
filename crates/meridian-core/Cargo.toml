@@ -18,7 +18,7 @@ geo-types = { version = "0.7", features = ["serde"] }
 rstar = "0.12"
 
 # Coordinate transformations
-proj = "0.27"
+proj = "0.28"
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }

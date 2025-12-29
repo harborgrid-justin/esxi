@@ -1,0 +1,94 @@
+[package]
+name = "meridian-ml"
+version = "0.2.5"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Machine learning capabilities for spatial analysis in Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/harborgrid/meridian"
+keywords = ["gis", "machine-learning", "spatial-analysis", "geospatial", "ml"]
+categories = ["science", "algorithms", "mathematics"]
+
+[dependencies]
+# Core ML libraries
+ndarray = { version = "0.15", features = ["rayon", "serde"] }
+linfa = { version = "0.7", features = ["serde"] }
+linfa-clustering = "0.7"
+linfa-reduction = "0.7"
+linfa-kernel = "0.7"
+linfa-nn = "0.7"
+smartcore = { version = "0.3", features = ["serde"] }
+
+# ONNX Runtime
+tract-onnx = { version = "0.21", optional = true }
+tract-core = { version = "0.21", optional = true }
+tract-hir = { version = "0.21", optional = true }
+
+# Numerical computing
+nalgebra = "0.32"
+num-traits = "0.2"
+rand = "0.8"
+rand_distr = "0.4"
+
+# Feature engineering
+statrs = "0.16"
+noisy_float = "0.2"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bincode = "1.3"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+async-trait = "0.1"
+
+# Parallel processing
+rayon = "1.8"
+crossbeam = "0.8"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# DateTime
+chrono = { version = "0.4", features = ["serde"] }
+
+# Geospatial
+geo = "0.27"
+geo-types = "0.7"
+
+# GPU acceleration (optional)
+cudarc = { version = "0.10", optional = true }
+ocl = { version = "0.19", optional = true }
+
+# AutoML
+hyperopt = { version = "0.0.17", optional = true }
+
+# Model explainability
+shap = { version = "0.1", optional = true }
+
+[dev-dependencies]
+criterion = "0.5"
+proptest = "1.4"
+approx = "0.5"
+tempfile = "3.8"
+
+[features]
+default = ["onnx", "automl"]
+onnx = ["tract-onnx", "tract-core", "tract-hir"]
+gpu-cuda = ["cudarc"]
+gpu-opencl = ["ocl"]
+gpu = ["gpu-cuda"]
+automl = ["hyperopt"]
+explainability = ["shap"]
+full = ["onnx", "gpu", "automl", "explainability"]
+
+# Benchmarks - uncomment when benches/ml_benchmarks.rs is created
+# [[bench]]
+# name = "ml_benchmarks"
+# harness = false

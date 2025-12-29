@@ -7,7 +7,6 @@ use argon2::{Argon2, PasswordHash, PasswordHasher, PasswordVerifier};
 use argon2::password_hash::SaltString;
 use hkdf::Hkdf;
 use pbkdf2::pbkdf2_hmac;
-use ring::digest;
 use serde::{Deserialize, Serialize};
 use zeroize::{Zeroize, ZeroizeOnDrop};
 

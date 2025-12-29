@@ -2,8 +2,7 @@
 
 use async_trait::async_trait;
 use bytes::Bytes;
-use redis::{aio::ConnectionManager, Client, Cmd, FromRedisValue, RedisResult, Value};
-use serde::{Deserialize, Serialize};
+use redis::{aio::ConnectionManager, Client, RedisResult};
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -68,7 +67,7 @@ impl RedisCache {
 
         let connection = ConnectionManager::new(client.clone())
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         Ok(Self {
             client,
@@ -109,12 +108,12 @@ impl RedisCache {
 
     /// Serialize cache entry
     fn serialize_entry(&self, entry: &CacheEntry) -> CacheResult<Vec<u8>> {
-        bincode::serialize(entry).map_err(|e| CacheError::Serialization(e))
+        bincode::serialize(entry).map_err(CacheError::Serialization)
     }
 
     /// Deserialize cache entry
     fn deserialize_entry(&self, data: &[u8]) -> CacheResult<CacheEntry> {
-        bincode::deserialize(data).map_err(|e| CacheError::Serialization(e))
+        bincode::deserialize(data).map_err(CacheError::Serialization)
     }
 
     /// Execute with retry logic
@@ -148,7 +147,7 @@ impl CacheBackend for RedisCache {
             .arg(&full_key)
             .query_async(&mut conn)
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         if let Some(data) = result {
             let entry = self.deserialize_entry(&data)?;
@@ -180,16 +179,16 @@ impl CacheBackend for RedisCache {
                 .arg(&full_key)
                 .arg(ttl.as_secs())
                 .arg(&data)
-                .query_async(&mut conn)
+                .query_async::<_, ()>(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
         } else {
             redis::cmd("SET")
                 .arg(&full_key)
                 .arg(&data)
-                .query_async(&mut conn)
+                .query_async::<_, ()>(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
         }
 
         // Store tags in a separate set for tag-based invalidation
@@ -199,9 +198,9 @@ impl CacheBackend for RedisCache {
                 redis::cmd("SADD")
                     .arg(&tag_key)
                     .arg(&full_key)
-                    .query_async(&mut conn)
+                    .query_async::<_, ()>(&mut conn)
                     .await
-                    .map_err(|e| CacheError::Redis(e))?;
+                    .map_err(CacheError::Redis)?;
             }
         }
 
@@ -217,7 +216,7 @@ impl CacheBackend for RedisCache {
             .arg(&full_key)
             .query_async(&mut conn)
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         if result > 0 {
             self.stats.write().deletes += 1;
@@ -235,7 +234,7 @@ impl CacheBackend for RedisCache {
             .arg(&full_key)
             .query_async(&mut conn)
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         Ok(result)
     }
@@ -256,14 +255,14 @@ impl CacheBackend for RedisCache {
                 .arg(1000)
                 .query_async(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
 
             if !keys.is_empty() {
                 redis::cmd("DEL")
                     .arg(&keys)
                     .query_async::<_, ()>(&mut conn)
                     .await
-                    .map_err(|e| CacheError::Redis(e))?;
+                    .map_err(CacheError::Redis)?;
             }
 
             cursor = new_cursor;
@@ -295,7 +294,7 @@ impl CacheBackend for RedisCache {
                 .arg(1000)
                 .query_async(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
 
             all_keys.extend(keys.into_iter().map(|k| self.strip_prefix(&k)));
 
@@ -333,14 +332,14 @@ impl CacheBackend for RedisCache {
                 .arg(&tag_key)
                 .query_async(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
 
             if !keys.is_empty() {
                 let deleted: i32 = redis::cmd("DEL")
                     .arg(&keys)
                     .query_async(&mut conn)
                     .await
-                    .map_err(|e| CacheError::Redis(e))?;
+                    .map_err(CacheError::Redis)?;
                 count += deleted as usize;
 
                 // Remove the tag set
@@ -348,7 +347,7 @@ impl CacheBackend for RedisCache {
                     .arg(&tag_key)
                     .query_async::<_, ()>(&mut conn)
                     .await
-                    .map_err(|e| CacheError::Redis(e))?;
+                    .map_err(CacheError::Redis)?;
             }
         }
 
@@ -371,14 +370,14 @@ impl CacheBackend for RedisCache {
                 .arg(1000)
                 .query_async(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
 
             for key in keys {
                 let size: Option<usize> = redis::cmd("STRLEN")
                     .arg(&key)
                     .query_async(&mut conn)
                     .await
-                    .map_err(|e| CacheError::Redis(e))?;
+                    .map_err(CacheError::Redis)?;
                 total_size += size.unwrap_or(0);
             }
 
@@ -407,7 +406,7 @@ impl CacheBackend for RedisCache {
                 .arg(1000)
                 .query_async(&mut conn)
                 .await
-                .map_err(|e| CacheError::Redis(e))?;
+                .map_err(CacheError::Redis)?;
 
             count += keys.len();
 
@@ -429,7 +428,7 @@ impl CacheBackend for RedisCache {
             .arg(ttl.as_secs())
             .query_async(&mut conn)
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         Ok(result)
     }
@@ -442,7 +441,7 @@ impl CacheBackend for RedisCache {
             .arg(&full_key)
             .query_async(&mut conn)
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         if ttl_secs < 0 {
             Ok(None)
@@ -459,7 +458,7 @@ impl CacheBackend for RedisCache {
             .arg(&full_keys)
             .query_async(&mut conn)
             .await
-            .map_err(|e| CacheError::Redis(e))?;
+            .map_err(CacheError::Redis)?;
 
         let mut results = Vec::with_capacity(values.len());
         for value in values {

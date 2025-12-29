@@ -75,6 +75,7 @@ mod serde_bytes {
 
 /// Options for cache operations
 #[derive(Debug, Clone)]
+#[derive(Default)]
 pub struct CacheOptions {
     /// Time-to-live
     pub ttl: Option<Duration>,
@@ -84,15 +85,6 @@ pub struct CacheOptions {
     pub compress: bool,
 }
 
-impl Default for CacheOptions {
-    fn default() -> Self {
-        Self {
-            ttl: None,
-            tags: Vec::new(),
-            compress: false,
-        }
-    }
-}
 
 /// Write policy for cache backends
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

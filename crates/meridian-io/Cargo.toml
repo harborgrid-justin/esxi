@@ -60,7 +60,7 @@ encoding_rs = "0.8"
 
 # GDAL (optional feature for advanced format support)
 [dependencies.gdal]
-version = "0.16"
+version = "0.17"
 optional = true
 
 [dev-dependencies]

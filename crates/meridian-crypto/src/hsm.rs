@@ -369,7 +369,7 @@ impl HsmManager {
 
         // In a real implementation, this would use the HSM to sign
         // For simulation, we'll use a software signature
-        use ring::signature::{self, KeyPair};
+        use ring::signature::{self};
         use ring::rand::SystemRandom;
 
         let rng = SystemRandom::new();

@@ -1,0 +1,76 @@
+[package]
+name = "meridian-imagery"
+version = "0.2.5"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Satellite and aerial imagery processing for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/harborgrid/meridian"
+keywords = ["gis", "imagery", "satellite", "geotiff", "remote-sensing"]
+categories = ["science", "graphics", "multimedia::images"]
+
+[dependencies]
+# Image processing
+image = "0.25"
+ndarray = { version = "0.16", features = ["rayon"] }
+imageproc = "0.25"
+rayon = "1.10"
+
+# Geospatial formats
+gdal = { version = "0.17", optional = true }
+gdal-sys = { version = "0.10", optional = true }
+geotiff = "0.1"
+tiff = "0.9"
+
+# Compression and formats
+jpeg-decoder = "0.3"
+png = "0.17"
+flate2 = "1.0"
+
+# STAC and catalog
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+geo = "0.28"
+geojson = "0.24"
+
+# Async and streaming
+tokio = { version = "1.40", features = ["full"], optional = true }
+futures = { version = "0.3", optional = true }
+async-trait = { version = "0.1", optional = true }
+
+# Numerical computing
+nalgebra = "0.33"
+statrs = "0.17"
+num-traits = "0.2"
+
+# Utilities
+thiserror = "1.0"
+anyhow = "1.0"
+log = "0.4"
+tracing = "0.1"
+
+# GPU acceleration (optional)
+wgpu = { version = "0.20", optional = true }
+bytemuck = { version = "1.14", optional = true }
+
+[dev-dependencies]
+tempfile = "3.10"
+criterion = "0.5"
+approx = "0.5"
+
+[features]
+default = ["async"]  # gdal removed from default to avoid system dependency
+gdal = ["dep:gdal", "dep:gdal-sys"]
+async = ["tokio", "futures", "async-trait"]
+gpu = ["wgpu", "bytemuck"]
+full = ["gdal", "async", "gpu"]
+
+# Benchmarks - uncomment when benches/imagery_processing.rs is created
+# [[bench]]
+# name = "imagery_processing"
+# harness = false
+
+[lib]
+name = "meridian_imagery"
+path = "src/lib.rs"

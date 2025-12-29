@@ -351,7 +351,7 @@ impl CacheBackend for DiskCache {
 
         let should_save = {
             self.stats.write().sets += 1;
-            self.stats.read().sets % 100 == 0
+            self.stats.read().sets.is_multiple_of(100)
         };
 
         // Periodically save index

@@ -181,7 +181,7 @@ impl SpatialRepository<Layer> for LayerRepository {
             RETURNING *
             "#
         )
-        .bind(&layer.id)
+        .bind(layer.id)
         .bind(&layer.name)
         .bind(&layer.description)
         .bind(&layer.layer_type)
@@ -338,8 +338,8 @@ impl FeatureRepository {
                 VALUES ($1, $2, ST_GeomFromGeoJSON($3), $4, $5, $6)
                 "#
             )
-            .bind(&feature.id)
-            .bind(&feature.layer_id)
+            .bind(feature.id)
+            .bind(feature.layer_id)
             .bind(&feature.geometry_json)
             .bind(&feature.properties)
             .bind(feature.created_at)
@@ -428,8 +428,8 @@ impl SpatialRepository<Feature> for FeatureRepository {
                       ST_AsGeoJSON(geometry) as geometry_json, properties, created_at, updated_at
             "#
         )
-        .bind(&feature.id)
-        .bind(&feature.layer_id)
+        .bind(feature.id)
+        .bind(feature.layer_id)
         .bind(&feature.geometry_json)
         .bind(&feature.properties)
         .bind(feature.created_at)
@@ -459,7 +459,7 @@ impl SpatialRepository<Feature> for FeatureRepository {
             "#
         )
         .bind(id)
-        .bind(&feature.layer_id)
+        .bind(feature.layer_id)
         .bind(&feature.geometry_json)
         .bind(&feature.properties)
         .bind(chrono::Utc::now())

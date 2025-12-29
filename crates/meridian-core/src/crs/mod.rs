@@ -46,6 +46,7 @@ pub struct Crs {
 
     /// Cached PROJ transformation object
     #[serde(skip)]
+    #[allow(dead_code)]
     proj: Option<Arc<Proj>>,
 }
 
@@ -200,6 +201,8 @@ impl Crs {
     ///
     /// This is used internally for coordinate transformations. The PROJ object
     /// is cached for performance.
+    #[allow(dead_code)]
+    #[allow(clippy::arc_with_non_send_sync)]
     pub(crate) fn get_proj(&mut self) -> Result<Arc<Proj>> {
         if let Some(ref proj) = self.proj {
             return Ok(Arc::clone(proj));

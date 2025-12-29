@@ -9,7 +9,7 @@ pub mod aws;
 #[cfg(feature = "vault")]
 pub mod vault;
 
-use crate::error::{CryptoError, CryptoResult};
+use crate::error::CryptoResult;
 use async_trait::async_trait;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;

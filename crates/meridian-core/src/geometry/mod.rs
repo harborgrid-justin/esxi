@@ -614,12 +614,19 @@ impl Bounded for GeometryCollection {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Geometry {
+    /// A single point geometry
     Point(Point),
+    /// A collection of points
     MultiPoint(MultiPoint),
+    /// A line string (polyline) geometry
     LineString(LineString),
+    /// A collection of line strings
     MultiLineString(MultiLineString),
+    /// A polygon geometry
     Polygon(Polygon),
+    /// A collection of polygons
     MultiPolygon(MultiPolygon),
+    /// A collection of mixed geometry types
     GeometryCollection(GeometryCollection),
 }
 

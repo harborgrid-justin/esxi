@@ -1,0 +1,88 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": false,
+    "baseUrl": ".",
+    "paths": {
+      "@meridian/core": ["./crates/meridian-core/ts/src"],
+      "@meridian/ui-components": ["./crates/meridian-ui-components/ts/src"],
+      "@meridian/dashboard": ["./crates/meridian-dashboard/ts/src"],
+      "@meridian/accessibility-scanner": ["./crates/accessibility-scanner/ts/src"],
+      "@meridian/accessibility-dashboard": ["./crates/accessibility-dashboard/ts/src"],
+      "@meridian/accessibility-realtime": ["./crates/accessibility-realtime/ts/src"],
+      "@meridian/accessibility-reports": ["./crates/accessibility-reports/ts/src"],
+      "@meridian/accessibility-contrast": ["./crates/accessibility-contrast/ts/src"],
+      "@meridian/accessibility-screenreader": ["./crates/accessibility-screenreader/ts/src"],
+      "@meridian/accessibility-keyboard": ["./crates/accessibility-keyboard/ts/src"],
+      "@meridian/accessibility-aria": ["./crates/accessibility-aria/ts/src"],
+      "@meridian/accessibility-documents": ["./crates/accessibility-documents/ts/src"],
+      "@meridian/accessibility-tenant": ["./crates/accessibility-tenant/ts/src"],
+      "@/*": ["./web/src/*"]
+    },
+
+    /* Emit */
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "noEmit": false,
+    "importHelpers": true,
+    "importsNotUsedAsValues": "remove",
+    "downlevelIteration": true,
+    "inlineSources": false,
+
+    /* Interop Constraints */
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking - Strict Mode */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "useUnknownInCatchVariables": true,
+    "alwaysStrict": true,
+
+    /* Type Checking - Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "exactOptionalPropertyTypes": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+
+    /* Completeness */
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.spec.tsx",
+    "**/*.test.tsx"
+  ]
+}

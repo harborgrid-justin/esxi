@@ -1,0 +1,55 @@
+# Dependencies
+node_modules
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build output
+dist
+build
+.next
+out
+coverage
+.turbo
+
+# Rust
+target
+Cargo.lock
+
+# Cache
+.cache
+.parcel-cache
+.eslintcache
+
+# Logs
+*.log
+logs
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Generated files
+*.min.js
+*.min.css
+*.bundle.js
+
+# Documentation (keep original formatting)
+CHANGELOG.md
+LICENSE
+
+# Config files that should not be formatted
+.github
+docker
+
+# Build reports
+BUILD_*.md
+ERROR_*.md
+WARNING_*.md
+SCRATCHPAD*.md
+build_errors.txt
+BUILD_REPORT.txt

@@ -1,0 +1,49 @@
+{
+  "name": "@meridian/accessibility-aria",
+  "version": "1.0.0",
+  "description": "Enterprise-grade ARIA attribute validator with WAI-ARIA 1.2 compliance",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc && rollup -c",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "aria",
+    "accessibility",
+    "validator",
+    "wai-aria",
+    "a11y",
+    "wcag",
+    "semantic-html"
+  ],
+  "author": "Meridian Platform Team",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "jest": "^29.0.0",
+    "rollup": "^3.0.0",
+    "typescript": "^5.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

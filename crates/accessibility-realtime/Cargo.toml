@@ -1,0 +1,66 @@
+[package]
+name = "accessibility-realtime"
+version = "0.1.0"
+edition = "2021"
+authors = ["Meridian GIS Platform <engineering@meridian.com>"]
+description = "Enterprise real-time accessibility monitoring system with WebSocket support"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/meridian/accessibility-realtime"
+keywords = ["accessibility", "monitoring", "realtime", "websocket", "a11y"]
+categories = ["web-programming", "accessibility", "asynchronous"]
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+tokio-util = { version = "0.7", features = ["codec"] }
+
+# Web framework
+axum = { version = "0.7", features = ["ws", "macros"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace", "timeout"] }
+
+# WebSocket
+tokio-tungstenite = "0.21"
+futures-util = "0.3"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Time and scheduling
+chrono = { version = "0.4", features = ["serde"] }
+cron = "0.12"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging and tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Metrics
+metrics = "0.21"
+metrics-exporter-prometheus = "0.13"
+
+# UUID generation
+uuid = { version = "1.6", features = ["v4", "serde"] }
+
+# Concurrency
+parking_lot = "0.12"
+dashmap = "5.5"
+
+# HTTP client
+reqwest = { version = "0.11", features = ["json"] }
+
+[dev-dependencies]
+mockito = "1.2"
+tokio-test = "0.4"
+
+[lib]
+name = "accessibility_realtime"
+path = "src/lib.rs"
+
+[[example]]
+name = "monitor_server"
+path = "examples/monitor_server.rs"

@@ -7,7 +7,7 @@ use std::time::Duration;
 use tracing::{debug, warn};
 
 use crate::backend::{CacheBackend, CacheEntry, CacheOptions, WritePolicy};
-use crate::error::{CacheError, CacheResult};
+use crate::error::CacheResult;
 use crate::stats::CacheStats;
 
 /// Cache tier configuration

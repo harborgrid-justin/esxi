@@ -258,10 +258,10 @@ pub fn write_cert_and_key(
     key_pem: &[u8],
 ) -> CryptoResult<()> {
     std::fs::write(cert_path, cert_pem)
-        .map_err(|e| CryptoError::IoError(e))?;
+        .map_err(CryptoError::IoError)?;
 
     std::fs::write(key_path, key_pem)
-        .map_err(|e| CryptoError::IoError(e))?;
+        .map_err(CryptoError::IoError)?;
 
     // Set restrictive permissions on private key
     #[cfg(unix)]
@@ -269,7 +269,7 @@ pub fn write_cert_and_key(
         use std::os::unix::fs::PermissionsExt;
         let perms = std::fs::Permissions::from_mode(0o600);
         std::fs::set_permissions(key_path, perms)
-            .map_err(|e| CryptoError::IoError(e))?;
+            .map_err(CryptoError::IoError)?;
     }
 
     Ok(())

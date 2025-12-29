@@ -2,7 +2,7 @@
 //!
 //! This module provides comprehensive audit logging for all cryptographic operations.
 
-use crate::error::{CryptoError, CryptoResult};
+use crate::error::CryptoResult;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;

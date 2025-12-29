@@ -212,7 +212,7 @@ impl<B: CacheBackend + 'static> TileCache<B> {
         if let Some(entry) = self.backend.get(&key).await? {
             // Decompress if needed
             let metadata: TileMetadata = serde_json::from_slice(
-                &entry.metadata.tags.first()
+                entry.metadata.tags.first()
                     .and_then(|tag| tag.strip_prefix("metadata:"))
                     .map(|s| s.as_bytes())
                     .unwrap_or(b"{}"),

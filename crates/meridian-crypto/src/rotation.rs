@@ -5,7 +5,6 @@
 
 use crate::envelope::{EncryptedEnvelope, EnvelopeEncryption};
 use crate::error::{CryptoError, CryptoResult};
-use crate::kms::KeyManagementService;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::sync::Arc;

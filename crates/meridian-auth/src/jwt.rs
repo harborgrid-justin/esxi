@@ -67,7 +67,7 @@ impl Claims {
 
     /// Get expiration time
     pub fn expiration(&self) -> DateTime<Utc> {
-        DateTime::from_timestamp(self.exp, 0).unwrap_or_else(|| Utc::now())
+        DateTime::from_timestamp(self.exp, 0).unwrap_or_else(Utc::now)
     }
 
     /// Check if user has a specific role

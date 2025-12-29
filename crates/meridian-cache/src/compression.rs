@@ -1,7 +1,6 @@
 //! Compression support for cached data
 
 use bytes::Bytes;
-use std::io::{Read, Write};
 
 use crate::error::{CacheError, CacheResult};
 

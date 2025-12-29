@@ -1,15 +1,14 @@
 //! Cache invalidation strategies and policies
 
-use async_trait::async_trait;
 use dashmap::DashMap;
 use std::collections::{HashMap, HashSet};
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 use tokio::sync::RwLock;
 use tracing::{debug, info};
 
 use crate::backend::CacheBackend;
-use crate::error::{CacheError, CacheResult};
+use crate::error::CacheResult;
 
 /// Cache invalidation strategy
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -333,14 +332,14 @@ impl QueryInvalidationTracker {
         // Store query pattern -> cache key mapping
         self.query_keys
             .entry(query_pattern.to_string())
-            .or_insert_with(HashSet::new)
+            .or_default()
             .insert(cache_key.to_string());
 
         // Store table -> query pattern mapping
         for table in tables {
             self.table_queries
                 .entry(table)
-                .or_insert_with(HashSet::new)
+                .or_default()
                 .insert(query_pattern.to_string());
         }
     }

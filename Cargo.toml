@@ -24,10 +24,26 @@ members = [
     "crates/meridian-events",
     "crates/meridian-crypto",
     "crates/meridian-backup",
+
+    # Visualization & Frontend (v0.2.5)
+    "crates/meridian-ui-components",
+    "crates/meridian-map-engine",
+    "crates/meridian-3d",
+    "crates/meridian-vector-tiles",
+    "crates/meridian-dashboard",
+
+    # Data Processing & Intelligence (v0.2.5)
+    "crates/meridian-data-pipeline",
+    "crates/meridian-ml",
+    "crates/meridian-imagery",
+
+    # Collaboration & Networking (v0.2.5)
+    "crates/meridian-realtime",
+    "crates/meridian-routing",
 ]
 
 [workspace.package]
-version = "0.1.5"
+version = "0.2.5"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/meridian-gis/meridian"

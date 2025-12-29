@@ -245,15 +245,14 @@ impl Policy {
 
         // Evaluate all applicable rules
         for rule in &self.rules {
-            if rule.applies_to(&context.action, resource) {
-                if rule.evaluate(context)? {
+            if rule.applies_to(&context.action, resource)
+                && rule.evaluate(context)? {
                     decision = rule.effect;
                     // If we find an explicit deny, stop and deny
                     if decision == PolicyDecision::Deny {
                         break;
                     }
                 }
-            }
         }
 
         Ok(decision)

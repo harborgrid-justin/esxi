@@ -5,7 +5,6 @@ use bytes::Bytes;
 use dashmap::DashMap;
 use lru::LruCache;
 use parking_lot::RwLock;
-use std::collections::HashMap;
 use std::num::NonZeroUsize;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -354,7 +353,7 @@ impl CacheBackend for MemoryCache {
     }
 
     async fn set(&self, key: &str, value: Bytes, options: CacheOptions) -> CacheResult<()> {
-        let mut metadata = CacheMetadata {
+        let metadata = CacheMetadata {
             ttl: options.ttl,
             size: value.len(),
             tags: options.tags,
@@ -581,11 +580,10 @@ impl CacheBackend for MemoryCache {
 
         for key in all_keys {
             if let Some(entry) = self.get(&key).await? {
-                if tags.iter().any(|tag| entry.metadata.tags.contains(tag)) {
-                    if self.delete(&key).await? {
+                if tags.iter().any(|tag| entry.metadata.tags.contains(tag))
+                    && self.delete(&key).await? {
                         count += 1;
                     }
-                }
             }
         }
         Ok(count)

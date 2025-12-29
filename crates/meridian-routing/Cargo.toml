@@ -1,0 +1,74 @@
+[package]
+name = "meridian-routing"
+version = "0.2.5"
+edition = "2021"
+authors = ["Meridian GIS Team"]
+description = "Advanced routing and network analysis for Meridian GIS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/harborgrid/meridian"
+keywords = ["gis", "routing", "navigation", "network-analysis", "isochrone"]
+categories = ["algorithms", "data-structures", "science::geo"]
+
+[dependencies]
+# Graph algorithms
+petgraph = "0.6"
+
+# Numeric types
+ordered-float = "4.2"
+
+# Parallelism
+rayon = "1.10"
+
+# High-performance collections
+hashbrown = "0.14"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Geo types
+geo-types = "0.7"
+geo = "0.28"
+
+# Time handling
+chrono = "0.4"
+
+# Priority queue
+priority-queue = "2.0"
+
+# GTFS support
+gtfs-structures = { version = "0.41", optional = true }
+
+# Compression for graph storage
+flate2 = "1.0"
+bincode = "1.3"
+
+# Logging
+log = "0.4"
+
+# Math utilities
+num-traits = "0.2"
+
+[dev-dependencies]
+criterion = "0.5"
+approx = "0.5"
+proptest = "1.4"
+
+[features]
+default = ["transit"]
+transit = ["gtfs-structures"]
+parallel = []
+experimental = []
+
+# Benchmarks - uncomment when benches/routing_benchmark.rs is created
+# [[bench]]
+# name = "routing_benchmark"
+# harness = false
+
+[lib]
+name = "meridian_routing"
+path = "src/lib.rs"

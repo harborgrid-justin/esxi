@@ -3,7 +3,7 @@
 //! This module provides X.509 certificate generation, validation, and management.
 
 use crate::error::{CryptoError, CryptoResult};
-use rcgen::{Certificate, CertificateParams, DistinguishedName, DnType, KeyPair as RcgenKeyPair};
+use rcgen::{Certificate, CertificateParams, DistinguishedName, DnType};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::path::Path;
@@ -317,7 +317,7 @@ impl CertificateManager {
     /// Load certificate from file.
     pub fn load_certificate(&mut self, path: &Path) -> CryptoResult<Vec<u8>> {
         let cert_pem = std::fs::read(path)
-            .map_err(|e| CryptoError::IoError(e))?;
+            .map_err(CryptoError::IoError)?;
 
         // Validate the certificate
         self.parse_certificate(&cert_pem)?;
@@ -331,7 +331,7 @@ impl CertificateManager {
     /// Save certificate to file.
     pub fn save_certificate(&self, cert_pem: &[u8], path: &Path) -> CryptoResult<()> {
         std::fs::write(path, cert_pem)
-            .map_err(|e| CryptoError::IoError(e))?;
+            .map_err(CryptoError::IoError)?;
 
         Ok(())
     }

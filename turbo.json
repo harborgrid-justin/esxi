@@ -1,0 +1,57 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    "tsconfig.base.json",
+    ".eslintrc.js",
+    ".prettierrc"
+  ],
+  "globalEnv": [
+    "NODE_ENV",
+    "CI",
+    "RUST_LOG",
+    "DATABASE_URL",
+    "REDIS_URL"
+  ],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**", ".next/**", "!.next/cache/**"],
+      "env": ["NODE_ENV"],
+      "cache": true,
+      "persistent": false
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "cache": true,
+      "persistent": false
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": [],
+      "cache": true,
+      "persistent": false
+    },
+    "test": {
+      "dependsOn": ["build"],
+      "outputs": ["coverage/**"],
+      "cache": true,
+      "persistent": false
+    },
+    "clean": {
+      "cache": false,
+      "persistent": false
+    }
+  },
+  "remoteCache": {
+    "enabled": false
+  },
+  "cacheDir": ".turbo",
+  "daemon": true,
+  "ui": "tui"
+}

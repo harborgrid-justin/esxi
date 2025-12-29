@@ -1,0 +1,61 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+docs/
+
+# Build artifacts
+node_modules
+dist
+build
+coverage
+.turbo
+target/debug
+target/doc
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+*.log
+
+# Test files
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+__tests__
+__mocks__
+
+# CI/CD
+.github/workflows
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Build logs and reports
+BUILD_*.md
+ERROR_*.md
+WARNING_*.md
+SCRATCHPAD*.md
+build_errors.txt
+BUILD_REPORT.txt
+
+# Other
+.npmrc
+.yarnrc
+.yarn
+.pnp.*

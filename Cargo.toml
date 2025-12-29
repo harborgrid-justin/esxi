@@ -40,10 +40,22 @@ members = [
     # Collaboration & Networking (v0.2.5)
     "crates/meridian-realtime",
     "crates/meridian-routing",
+
+    # Enterprise Web Accessibility SaaS (v0.3.0)
+    "crates/accessibility-scanner",
+    "crates/accessibility-dashboard",
+    "crates/accessibility-realtime",
+    "crates/accessibility-reports",
+    "crates/accessibility-contrast",
+    "crates/accessibility-screenreader",
+    "crates/accessibility-keyboard",
+    "crates/accessibility-aria",
+    "crates/accessibility-documents",
+    "crates/accessibility-tenant",
 ]
 
 [workspace.package]
-version = "0.2.5"
+version = "0.3.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/meridian-gis/meridian"

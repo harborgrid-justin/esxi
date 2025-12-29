@@ -1,0 +1,69 @@
+[package]
+name = "accessibility-scanner"
+version = "0.1.0"
+edition = "2021"
+authors = ["HarborGrid Engineering <engineering@harborgrid.com>"]
+description = "Enterprise-grade WCAG 2.1 accessibility scanner with advanced DOM analysis"
+license = "MIT"
+repository = "https://github.com/harborgrid/accessibility-scanner"
+keywords = ["accessibility", "wcag", "a11y", "scanner", "audit"]
+categories = ["web-programming", "accessibility", "development-tools"]
+
+[dependencies]
+# HTML/DOM parsing
+scraper = "0.20"
+html5ever = "0.27"
+markup5ever = "0.12"
+cssparser = "0.33"
+selectors = "0.25"
+
+# Async runtime
+tokio = { version = "1.40", features = ["full"] }
+futures = "0.3"
+
+# Parallel processing
+rayon = "1.10"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# HTTP client
+reqwest = { version = "0.12", features = ["json", "rustls-tls"] }
+url = "2.5"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Utilities
+regex = "1.10"
+lazy_static = "1.5"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.10", features = ["v4", "serde"] }
+num_cpus = "1.16"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Image analysis
+image = "0.25"
+colorconvert = "0.1"
+
+# Performance
+dashmap = "6.1"
+
+[dev-dependencies]
+tokio-test = "0.4"
+criterion = "0.5"
+mockito = "1.5"
+
+[[bench]]
+name = "scanner_benchmark"
+harness = false
+
+[lib]
+name = "accessibility_scanner"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]

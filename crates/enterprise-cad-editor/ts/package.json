@@ -1,0 +1,54 @@
+{
+  "name": "@harborgrid/enterprise-cad-editor",
+  "version": "1.0.0",
+  "description": "Enterprise-grade CAD/Vector Editor with GPU acceleration and parametric constraints",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\""
+  },
+  "keywords": [
+    "cad",
+    "vector-editor",
+    "webgl",
+    "gpu-acceleration",
+    "bezier",
+    "parametric-design",
+    "constraints",
+    "geometric-modeling"
+  ],
+  "author": "HarborGrid",
+  "license": "MIT",
+  "dependencies": {
+    "gl-matrix": "^3.4.3",
+    "earcut": "^2.2.4",
+    "simplify-js": "^1.2.4"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harborgrid/enterprise-cad-editor"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "@harborgrid/enterprise-spatial",
+  "version": "0.4.0",
+  "description": "Enterprise GIS Spatial Analysis Tools - Advanced geospatial processing and analysis",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src --ext .ts,.tsx",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "gis",
+    "spatial-analysis",
+    "geospatial",
+    "mapping",
+    "topology",
+    "raster",
+    "vector",
+    "projection",
+    "coordinate-systems",
+    "spatial-indexing"
+  ],
+  "author": "HarborGrid",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "proj4": "^2.9.0",
+    "rbush": "^3.0.1",
+    "turf": "^3.0.14",
+    "@turf/turf": "^6.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/proj4": "^2.5.2",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "eslint": "^8.56.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "prettier": "^3.2.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harborgrid/esxi.git",
+    "directory": "crates/enterprise-spatial/ts"
+  }
+}

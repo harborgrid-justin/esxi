@@ -19,6 +19,7 @@ datafusion = "43.0.0"
 tokio = { version = "1.42", features = ["full"] }
 tokio-stream = "0.1"
 futures = "0.3"
+async-trait = "0.1"
 
 # Parallel processing
 rayon = "1.10"
@@ -27,7 +28,7 @@ rayon = "1.10"
 geo = "0.28"
 geo-types = "0.7"
 geojson = { version = "0.24", features = ["geo-types"] }
-proj = "0.28"
+proj = { version = "0.28", optional = true }
 wkt = "0.10"
 
 # Database connectivity
@@ -105,7 +106,8 @@ default = ["kafka", "mqtt", "diesel-support"]
 kafka = ["rdkafka"]
 mqtt = ["rumqttc"]
 diesel-support = ["diesel"]
-full = ["kafka", "mqtt", "diesel-support"]
+proj-transform = ["proj"]
+full = ["kafka", "mqtt", "diesel-support", "proj-transform"]
 
 [lib]
 name = "meridian_data_pipeline"

@@ -1,0 +1,61 @@
+[package]
+name = "meridian-cad"
+version = "0.5.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/meridian-gis/meridian"
+description = "Enterprise CAD Engine for $983M SaaS Platform - High-precision vector graphics and constraint-based design"
+authors = ["Meridian Engineering Team"]
+
+[dependencies]
+# Core async runtime
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Error handling
+thiserror = { workspace = true }
+
+# Unique identifiers
+uuid = { workspace = true }
+
+# Linear algebra and geometry
+nalgebra = { version = "0.32", features = ["serde-serialize"] }
+euclid = { version = "0.22", features = ["serde"] }
+
+# Path drawing and tessellation
+lyon = { version = "1.0", features = ["serialization"] }
+lyon_geom = "1.0"
+lyon_tessellation = "1.0"
+
+# High-precision arithmetic
+rust_decimal = { version = "1.33", features = ["serde-float"] }
+num-traits = "0.2"
+
+# Date/time for history tracking
+chrono = { workspace = true }
+
+# Logging
+tracing = { workspace = true }
+
+# DXF export
+dxf = "0.5"
+
+# SVG export
+svg = "0.14"
+
+# PDF generation (for export)
+printpdf = "0.6"
+
+# Command pattern for undo/redo
+dashmap = "5.5"
+
+[dev-dependencies]
+tokio-test = "0.4"
+approx = "0.5"
+
+[lib]
+name = "meridian_cad"
+path = "src/lib.rs"

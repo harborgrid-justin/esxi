@@ -15,7 +15,7 @@ pub mod texture;
 pub use mesh::{TerrainMesh, MeshVertex};
 pub use lod::{LodManager, LodLevel, LodSettings};
 pub use heightmap::{HeightmapSource, Heightmap};
-pub use texture::{TerrainTexture, TextureSplatting};
+pub use texture::{TerrainTextureLayer, TextureSplatting, BlendMode};
 
 use crate::{Camera, Error, Result, Vertex};
 use glam::{Vec2, Vec3};

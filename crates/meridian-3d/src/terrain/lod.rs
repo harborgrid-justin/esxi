@@ -6,7 +6,7 @@ use glam::Vec3;
 use serde::{Deserialize, Serialize};
 
 /// LOD level configuration
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct LodLevel {
     /// LOD level index (0 = highest detail)
     pub level: u32,

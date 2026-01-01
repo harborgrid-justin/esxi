@@ -100,6 +100,7 @@
 // Re-export commonly used types from dependencies
 pub use geo;
 pub use geo_types;
+#[cfg(feature = "proj-transform")]
 pub use proj;
 pub use rstar;
 pub use serde_json;

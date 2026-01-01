@@ -1,0 +1,75 @@
+[package]
+name = "meridian-gateway"
+version = "0.5.0"
+edition = "2021"
+license = "MIT"
+description = "Enterprise API Gateway - $983M Platform v0.5"
+repository = "https://github.com/meridian-gis/meridian"
+
+[dependencies]
+# Web Framework
+axum = { version = "0.7", features = ["json", "tokio", "http2", "ws", "macros"] }
+tower = { version = "0.4", features = ["full"] }
+tower-http = { version = "0.5", features = ["full"] }
+hyper = { version = "1.0", features = ["full"] }
+hyper-util = { version = "0.1", features = ["full"] }
+http = "1.0"
+http-body-util = "0.1"
+
+# Async Runtime
+tokio = { workspace = true }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+# Authentication & Security
+jsonwebtoken = "9"
+sha2 = "0.10"
+base64 = "0.21"
+argon2 = "0.5"
+
+# Error Handling
+thiserror = { workspace = true }
+anyhow = "1"
+
+# Concurrency & State
+dashmap = "5"
+parking_lot = "0.12"
+arc-swap = "1"
+
+# Rate Limiting
+governor = "0.6"
+nonzero_ext = "0.3"
+
+# Observability
+tracing = { workspace = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+prometheus = "0.13"
+
+# Time & UUID
+chrono = { workspace = true }
+uuid = { workspace = true }
+
+# Utilities
+async-trait = { workspace = true }
+futures = "0.3"
+bytes = "1"
+regex = "1"
+url = "2"
+reqwest = { version = "0.11", features = ["json"] }
+humantime-serde = "1.1"
+
+[dev-dependencies]
+tokio-test = "0.4"
+mockall = "0.12"
+wiremock = "0.6"
+
+[features]
+default = ["all"]
+all = ["jwt", "oauth", "rate-limiting", "caching", "metrics"]
+jwt = []
+oauth = []
+rate-limiting = []
+caching = []
+metrics = []

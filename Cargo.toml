@@ -37,16 +37,40 @@ members = [
     "crates/meridian-ml",
     "crates/meridian-imagery",
 
+    # AI/ML Pipeline Engine (v0.5.0)
+    "crates/meridian-ml-pipeline",
+
     # Collaboration & Networking (v0.2.5)
     "crates/meridian-realtime",
     "crates/meridian-routing",
+
+    # Enterprise Collaboration Platform (v0.5.0)
+    "crates/meridian-collaboration",
+
+    # Enterprise API Gateway (v0.5.0)
+    "crates/meridian-gateway",
+
+    # Enterprise CAD Engine (v0.5.0)
+    "crates/meridian-cad",
+
+    # WASM Bridge (v0.5.0)
+    "crates/meridian-wasm-bridge",
+
+    # Advanced Compression Algorithms (v0.5.0)
+    "crates/meridian-compression",
+
+    # Database Query Optimizer (v0.5.0)
+    "crates/meridian-query-optimizer",
+
+    # Enterprise Security Module (v0.5.0)
+    "crates/meridian-security",
 
     # Enterprise Web Accessibility SaaS (v0.3.0) - TypeScript only
     # Note: accessibility-* crates are now TypeScript packages in crates/*/ts/
 ]
 
 [workspace.package]
-version = "0.3.0"
+version = "0.5.0"
 edition = "2021"
 license = "MIT"
 repository = "https://github.com/meridian-gis/meridian"

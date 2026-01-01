@@ -70,6 +70,7 @@ pub enum MeridianError {
 /// a consistent return type for fallible operations.
 pub type Result<T> = std::result::Result<T, MeridianError>;
 
+#[cfg(feature = "proj-transform")]
 impl From<proj::ProjError> for MeridianError {
     fn from(err: proj::ProjError) -> Self {
         MeridianError::ProjectionError(err.to_string())

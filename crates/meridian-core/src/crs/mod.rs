@@ -22,9 +22,11 @@
 //! ```
 
 use crate::error::{MeridianError, Result};
+#[cfg(feature = "proj-transform")]
 use proj::Proj;
 use serde::{Deserialize, Serialize};
 use std::fmt;
+#[cfg(feature = "proj-transform")]
 use std::sync::Arc;
 
 /// Represents a Coordinate Reference System.
@@ -45,6 +47,7 @@ pub struct Crs {
     pub name: String,
 
     /// Cached PROJ transformation object
+    #[cfg(feature = "proj-transform")]
     #[serde(skip)]
     #[allow(dead_code)]
     proj: Option<Arc<Proj>>,
@@ -69,6 +72,7 @@ impl Crs {
             epsg: Some(4326),
             proj_string: "EPSG:4326".to_string(),
             name: "WGS 84".to_string(),
+            #[cfg(feature = "proj-transform")]
             proj: None,
         }
     }
@@ -91,6 +95,7 @@ impl Crs {
             epsg: Some(3857),
             proj_string: "EPSG:3857".to_string(),
             name: "WGS 84 / Pseudo-Mercator".to_string(),
+            #[cfg(feature = "proj-transform")]
             proj: None,
         }
     }
@@ -128,6 +133,7 @@ impl Crs {
             epsg: Some(epsg),
             proj_string: format!("EPSG:{}", epsg),
             name: format!("WGS 84 / UTM zone {}{}", zone, if north { "N" } else { "S" }),
+            #[cfg(feature = "proj-transform")]
             proj: None,
         }
     }
@@ -148,6 +154,7 @@ impl Crs {
     /// let wgs84 = Crs::from_epsg(4326)?;
     /// let nad83 = Crs::from_epsg(4269)?;
     /// ```
+    #[cfg(feature = "proj-transform")]
     pub fn from_epsg(code: u32) -> Result<Self> {
         let proj_string = format!("EPSG:{}", code);
 
@@ -160,6 +167,32 @@ impl Crs {
             proj_string,
             name: format!("EPSG:{}", code),
             proj: None,
+        })
+    }
+
+    /// Creates a CRS from an EPSG code (without validation when proj-transform feature is disabled).
+    ///
+    /// # Arguments
+    ///
+    /// * `code` - The EPSG code
+    ///
+    /// # Returns
+    ///
+    /// A CRS instance
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// let wgs84 = Crs::from_epsg(4326)?;
+    /// let nad83 = Crs::from_epsg(4269)?;
+    /// ```
+    #[cfg(not(feature = "proj-transform"))]
+    pub fn from_epsg(code: u32) -> Result<Self> {
+        let proj_string = format!("EPSG:{}", code);
+        Ok(Self {
+            epsg: Some(code),
+            proj_string,
+            name: format!("EPSG:{}", code),
         })
     }
 
@@ -182,6 +215,7 @@ impl Crs {
     ///     "+proj=lcc +lat_1=33 +lat_2=45 +lat_0=39 +lon_0=-96"
     /// )?;
     /// ```
+    #[cfg(feature = "proj-transform")]
     pub fn from_proj_string(proj_string: impl Into<String>) -> Result<Self> {
         let proj_string = proj_string.into();
 
@@ -197,10 +231,40 @@ impl Crs {
         })
     }
 
+    /// Creates a CRS from a PROJ string (without validation when proj-transform feature is disabled).
+    ///
+    /// PROJ strings define projections using a key-value parameter format.
+    ///
+    /// # Arguments
+    ///
+    /// * `proj_string` - The PROJ string definition
+    ///
+    /// # Returns
+    ///
+    /// A CRS instance
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// let lcc = Crs::from_proj_string(
+    ///     "+proj=lcc +lat_1=33 +lat_2=45 +lat_0=39 +lon_0=-96"
+    /// )?;
+    /// ```
+    #[cfg(not(feature = "proj-transform"))]
+    pub fn from_proj_string(proj_string: impl Into<String>) -> Result<Self> {
+        let proj_string = proj_string.into();
+        Ok(Self {
+            epsg: None,
+            proj_string: proj_string.clone(),
+            name: proj_string,
+        })
+    }
+
     /// Gets or creates the PROJ transformation object for this CRS.
     ///
     /// This is used internally for coordinate transformations. The PROJ object
     /// is cached for performance.
+    #[cfg(feature = "proj-transform")]
     #[allow(dead_code)]
     #[allow(clippy::arc_with_non_send_sync)]
     pub(crate) fn get_proj(&mut self) -> Result<Arc<Proj>> {
@@ -236,6 +300,7 @@ impl Crs {
     ///
     /// let (x, y) = wgs84.transform_point(-122.4194, 37.7749, &web_mercator)?;
     /// ```
+    #[cfg(feature = "proj-transform")]
     pub fn transform_point(&mut self, x: f64, y: f64, target: &Crs) -> Result<(f64, f64)> {
         // If same CRS, no transformation needed
         if self.proj_string == target.proj_string {
@@ -250,6 +315,39 @@ impl Crs {
             .map_err(|e| MeridianError::TransformError(format!("Transformation failed: {}", e)))?;
 
         Ok(result)
+    }
+
+    /// Transforms a coordinate from this CRS to another CRS (stub when proj-transform feature is disabled).
+    ///
+    /// # Arguments
+    ///
+    /// * `_x` - The x coordinate (longitude or easting)
+    /// * `_y` - The y coordinate (latitude or northing)
+    /// * `target` - The target CRS
+    ///
+    /// # Returns
+    ///
+    /// Returns the original coordinates unchanged or an error if CRS differs
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// let wgs84 = Crs::wgs84();
+    /// let web_mercator = Crs::web_mercator();
+    ///
+    /// let (x, y) = wgs84.transform_point(-122.4194, 37.7749, &web_mercator)?;
+    /// ```
+    #[cfg(not(feature = "proj-transform"))]
+    pub fn transform_point(&mut self, x: f64, y: f64, target: &Crs) -> Result<(f64, f64)> {
+        // If same CRS, no transformation needed
+        if self.proj_string == target.proj_string {
+            return Ok((x, y));
+        }
+
+        // Without proj feature, we cannot transform between different CRS
+        Err(MeridianError::TransformError(
+            "Coordinate transformation requires the 'proj-transform' feature to be enabled".to_string()
+        ))
     }
 
     /// Checks if this CRS is geographic (uses lat/lon coordinates).
@@ -347,12 +445,14 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "proj-transform")]
     fn test_from_epsg() {
         let crs = Crs::from_epsg(4326).unwrap();
         assert_eq!(crs.epsg, Some(4326));
     }
 
     #[test]
+    #[cfg(feature = "proj-transform")]
     fn test_crs_equality() {
         let wgs84_1 = Crs::wgs84();
         let wgs84_2 = Crs::from_epsg(4326).unwrap();

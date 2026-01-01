@@ -10,6 +10,7 @@
   "packageManager": "npm@10.2.5",
   "workspaces": [
     "web",
+    "packages/enterprise-bridge",
     "crates/meridian-ui-components/ts",
     "crates/meridian-dashboard/ts",
     "crates/accessibility-scanner/ts",
@@ -96,7 +97,11 @@
     "spatial-analysis",
     "api-gateway",
     "notifications",
-    "fortune-500"
+    "fortune-500",
+    "wasm",
+    "webassembly",
+    "rust",
+    "typescript"
   ],
   "author": "HarborGrid",
   "license": "MIT",

@@ -18,6 +18,12 @@ pub enum SkyModel {
     Procedural,
 }
 
+impl Default for SkyModel {
+    fn default() -> Self {
+        Self::Gradient
+    }
+}
+
 /// Sky parameters
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SkyParameters {

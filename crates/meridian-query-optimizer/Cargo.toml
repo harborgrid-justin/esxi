@@ -1,0 +1,56 @@
+[package]
+name = "meridian-query-optimizer"
+version = "0.5.0"
+edition = "2021"
+authors = ["Meridian Engineering <engineering@meridian.io>"]
+description = "Advanced database query optimizer for Enterprise SaaS Platform - $983M scale"
+license = "Proprietary"
+repository = "https://github.com/meridian/esxi"
+
+[dependencies]
+# SQL Parsing
+sqlparser = "0.52"
+
+# Graph algorithms for query plan optimization
+petgraph = "0.6"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime
+tokio = { version = "1.42", features = ["full"] }
+
+# Error handling
+thiserror = "2.0"
+anyhow = "1.0"
+
+# Utilities
+uuid = { version = "1.11", features = ["v4", "serde"] }
+tracing = "0.1"
+async-trait = "0.1"
+parking_lot = "0.12"
+dashmap = "6.1"
+lru = "0.12"
+
+# Statistics and cost modeling
+ordered-float = "4.5"
+statistical = "1.0"
+
+# Time handling
+chrono = "0.4"
+
+# Serialization formats
+serde_yaml = "0.9"
+
+# CPU detection
+num_cpus = "1.16"
+
+[dev-dependencies]
+criterion = "0.5"
+proptest = "1.5"
+tokio-test = "0.4"
+
+[lib]
+name = "meridian_query_optimizer"
+path = "src/lib.rs"

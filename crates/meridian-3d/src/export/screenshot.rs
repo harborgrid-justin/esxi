@@ -131,7 +131,7 @@ impl ScreenshotExporter {
             }
             ImageFormat::Jpeg => {
                 let mut output = std::fs::File::create(path)?;
-                let encoder = image::codecs::jpeg::JpegEncoder::new_with_quality(
+                let mut encoder = image::codecs::jpeg::JpegEncoder::new_with_quality(
                     &mut output,
                     self.jpeg_quality,
                 );
@@ -213,7 +213,8 @@ impl ScreenshotExporter {
         });
 
         device.poll(wgpu::Maintain::Wait);
-        rx.await.unwrap()?;
+        rx.await.unwrap()
+            .map_err(|e| crate::Error::CaptureError(format!("Buffer mapping failed: {:?}", e)))?;
 
         let data = buffer_slice.get_mapped_range();
 

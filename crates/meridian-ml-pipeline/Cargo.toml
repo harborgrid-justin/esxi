@@ -1,0 +1,51 @@
+[package]
+name = "meridian-ml-pipeline"
+version = "0.5.0"
+edition = "2021"
+authors = ["HarborGrid Engineering <engineering@harborgrid.com>"]
+description = "Enterprise AI/ML Pipeline Engine for Meridian Platform - $983M SaaS"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/harborgrid/meridian"
+keywords = ["ml", "pipeline", "ai", "onnx", "enterprise"]
+categories = ["machine-learning", "data-structures"]
+
+[dependencies]
+# Numerical computing
+ndarray = { version = "0.15", features = ["serde"] }
+linfa = "0.7"
+tract-onnx = "0.21"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+tokio-stream = "0.1"
+async-trait = "0.1"
+futures = "0.3"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Utilities
+uuid = { version = "1.6", features = ["v4", "serde"] }
+rayon = "1.8"
+chrono = { version = "0.4", features = ["serde"] }
+dashmap = "5.5"
+parking_lot = "0.12"
+
+# Metrics and monitoring
+prometheus = "0.13"
+
+# Logging
+tracing = "0.1"
+
+[dev-dependencies]
+tokio-test = "0.4"
+approx = "0.5"
+
+[lib]
+name = "meridian_ml_pipeline"
+path = "src/lib.rs"

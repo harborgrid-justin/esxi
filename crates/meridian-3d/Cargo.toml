@@ -49,6 +49,7 @@ uuid = { version = "1.6", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 rayon = "1.8"
 parking_lot = "0.12"
+rand = "0.8"
 
 # Geometry and mesh processing
 spade = "2.7"  # Delaunay triangulation

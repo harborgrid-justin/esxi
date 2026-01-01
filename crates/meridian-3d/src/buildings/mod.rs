@@ -11,7 +11,7 @@ pub mod model;
 pub mod procedural;
 pub mod facade;
 
-pub use extrusion::{FootprintExtruder, ExtrusionParams};
+pub use extrusion::{FootprintExtruder, ExtrusionParams, RoofType};
 pub use model::{BuildingModel, ModelLoader};
 pub use procedural::{ProceduralBuilding, BuildingGenerator, BuildingStyle};
 pub use facade::{FacadeTexture, FacadePattern};

@@ -1,0 +1,60 @@
+[package]
+name = "meridian-compression"
+version = "0.5.0"
+edition = "2021"
+authors = ["Enterprise SaaS Platform Team"]
+description = "Advanced compression algorithms suite for $983M Enterprise SaaS Platform"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/harborgrid-justin/esxi"
+keywords = ["compression", "lz4", "zstd", "brotli", "enterprise"]
+categories = ["compression", "algorithms", "encoding"]
+
+[dependencies]
+# Compression algorithms
+lz4 = "1.24"
+zstd = { version = "0.13", features = ["experimental", "zstdmt"] }
+brotli = "6.0"
+flate2 = { version = "1.0", features = ["zlib-ng"] }
+snap = "1.1"
+
+# Async runtime
+tokio = { version = "1.35", features = ["full"] }
+tokio-util = { version = "0.7", features = ["codec", "io"] }
+async-trait = "0.1"
+
+# Serialization and data handling
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bytes = "1.5"
+
+# Error handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Performance and utilities
+rayon = "1.8"
+parking_lot = "0.12"
+dashmap = "5.5"
+
+# Metrics and monitoring
+metrics = "0.22"
+tracing = "0.1"
+
+# Hashing for dictionary keys
+blake3 = "1.5"
+ahash = "0.8"
+
+# Time measurement
+instant = "0.1"
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports", "async_tokio"] }
+proptest = "1.4"
+quickcheck = "1.0"
+tempfile = "3.8"
+test-case = "3.3"
+rstest = "0.18"
+
+[lib]
+name = "meridian_compression"
+path = "src/lib.rs"

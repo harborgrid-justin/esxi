@@ -18,7 +18,7 @@ geo-types = { version = "0.7", features = ["serde"] }
 rstar = "0.12"
 
 # Coordinate transformations
-proj = "0.28"
+proj = { version = "0.28", optional = true }
 
 # Serialization
 serde = { version = "1.0", features = ["derive"] }
@@ -32,6 +32,10 @@ num-traits = "0.2"
 
 [dev-dependencies]
 approx = "0.5"
+
+[features]
+default = []
+proj-transform = ["proj"]
 
 [lib]
 name = "meridian_core"

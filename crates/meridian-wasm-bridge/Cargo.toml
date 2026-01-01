@@ -1,0 +1,74 @@
+[package]
+name = "meridian-wasm-bridge"
+version = "0.5.0"
+edition = "2021"
+authors = ["HarborGrid Engineering <engineering@harborgrid.com>"]
+description = "Enterprise-grade WASM bridge connecting TypeScript to Rust for $983M Platform"
+license = "MIT"
+repository = "https://github.com/harborgrid-justin/esxi"
+keywords = ["wasm", "webassembly", "bridge", "typescript", "enterprise"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["console_error_panic_hook"]
+compression = []
+cad = []
+query = []
+collaboration = []
+security = []
+full = ["compression", "cad", "query", "collaboration", "security"]
+
+[dependencies]
+# WASM Core
+wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
+wasm-bindgen-futures = "0.4"
+js-sys = "0.3"
+web-sys = { version = "0.3", features = [
+    "console",
+    "Window",
+    "Performance",
+    "PerformanceTiming",
+    "WebSocket",
+    "MessageEvent",
+    "ErrorEvent",
+    "Blob",
+    "FileReader",
+    "Headers",
+    "Request",
+    "RequestInit",
+    "RequestMode",
+    "Response",
+    "Window",
+] }
+
+# Serialization
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde-wasm-bindgen = "0.6"
+
+# Error Handling
+thiserror = { workspace = true }
+console_error_panic_hook = { version = "0.1", optional = true }
+
+# Async Runtime
+tokio = { workspace = true, features = ["sync", "time"] }
+async-trait = { workspace = true }
+futures = "0.3"
+
+# Utilities
+uuid = { workspace = true }
+chrono = { workspace = true }
+base64 = "0.21"
+bytes = "1.5"
+
+# Logging
+tracing = { workspace = true }
+tracing-wasm = "0.2"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3"
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-O4", "--enable-mutable-globals"]

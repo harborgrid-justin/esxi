@@ -1,0 +1,94 @@
+{
+  "name": "@harborgrid/enterprise-shared",
+  "version": "0.4.0",
+  "description": "Shared types, interfaces, and utilities for Enterprise SaaS Platform",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.mjs",
+      "require": "./dist/types/index.js"
+    },
+    "./types/common": {
+      "types": "./dist/types/common.d.ts",
+      "import": "./dist/types/common.mjs",
+      "require": "./dist/types/common.js"
+    },
+    "./types/events": {
+      "types": "./dist/types/events.d.ts",
+      "import": "./dist/types/events.mjs",
+      "require": "./dist/types/events.js"
+    },
+    "./types/api": {
+      "types": "./dist/types/api.d.ts",
+      "import": "./dist/types/api.mjs",
+      "require": "./dist/types/api.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.mjs",
+      "require": "./dist/utils/index.js"
+    },
+    "./utils/validation": {
+      "types": "./dist/utils/validation.d.ts",
+      "import": "./dist/utils/validation.mjs",
+      "require": "./dist/utils/validation.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage"
+  },
+  "keywords": [
+    "enterprise",
+    "shared",
+    "types",
+    "typescript",
+    "saas",
+    "multi-tenant",
+    "integration"
+  ],
+  "author": "HarborGrid",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.22.4",
+    "date-fns": "^3.0.6",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "@vitest/ui": "^1.1.3",
+    "eslint": "^8.56.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.3"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harborgrid/esxi.git",
+    "directory": "crates/enterprise-shared/ts"
+  }
+}

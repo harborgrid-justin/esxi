@@ -41,17 +41,8 @@ members = [
     "crates/meridian-realtime",
     "crates/meridian-routing",
 
-    # Enterprise Web Accessibility SaaS (v0.3.0)
-    "crates/accessibility-scanner",
-    "crates/accessibility-dashboard",
-    "crates/accessibility-realtime",
-    "crates/accessibility-reports",
-    "crates/accessibility-contrast",
-    "crates/accessibility-screenreader",
-    "crates/accessibility-keyboard",
-    "crates/accessibility-aria",
-    "crates/accessibility-documents",
-    "crates/accessibility-tenant",
+    # Enterprise Web Accessibility SaaS (v0.3.0) - TypeScript only
+    # Note: accessibility-* crates are now TypeScript packages in crates/*/ts/
 ]
 
 [workspace.package]

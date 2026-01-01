@@ -27,6 +27,16 @@
       "@meridian/accessibility-aria": ["./crates/accessibility-aria/ts/src"],
       "@meridian/accessibility-documents": ["./crates/accessibility-documents/ts/src"],
       "@meridian/accessibility-tenant": ["./crates/accessibility-tenant/ts/src"],
+      "@meridian/enterprise-analytics": ["./crates/enterprise-analytics/ts/src"],
+      "@meridian/enterprise-billing": ["./crates/enterprise-billing/ts/src"],
+      "@meridian/enterprise-cad": ["./crates/enterprise-cad-editor/ts/src"],
+      "@meridian/enterprise-collaboration": ["./crates/enterprise-collaboration/ts/src"],
+      "@meridian/enterprise-compression": ["./crates/enterprise-compression/ts/src"],
+      "@meridian/enterprise-gateway": ["./crates/enterprise-gateway/ts/src"],
+      "@meridian/enterprise-notifications": ["./crates/enterprise-notifications/ts/src"],
+      "@meridian/enterprise-security": ["./crates/enterprise-security/ts/src"],
+      "@meridian/enterprise-spatial": ["./crates/enterprise-spatial/ts/src"],
+      "@meridian/enterprise-workflow": ["./crates/enterprise-workflow/ts/src"],
       "@/*": ["./web/src/*"]
     },
 

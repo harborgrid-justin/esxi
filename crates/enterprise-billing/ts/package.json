@@ -1,0 +1,66 @@
+{
+  "name": "@harborgrid/enterprise-billing",
+  "version": "0.4.0",
+  "description": "Enterprise-grade multi-tenant subscription and billing system with payment processing, usage tracking, and revenue analytics",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "billing",
+    "subscription",
+    "multi-tenant",
+    "payments",
+    "stripe",
+    "paypal",
+    "saas",
+    "revenue",
+    "invoicing",
+    "metered-billing"
+  ],
+  "author": "HarborGrid",
+  "license": "MIT",
+  "dependencies": {
+    "stripe": "^14.0.0",
+    "@paypal/checkout-server-sdk": "^1.0.3",
+    "decimal.js": "^10.4.3",
+    "date-fns": "^3.0.0",
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@types/uuid": "^9.0.7",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.11",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harborgrid/esxi.git",
+    "directory": "crates/enterprise-billing/ts"
+  }
+}

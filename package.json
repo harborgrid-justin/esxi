@@ -1,8 +1,8 @@
 {
   "name": "meridian-gis-platform",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
-  "description": "Enterprise GIS Platform with Web Accessibility SaaS - Monorepo",
+  "description": "$983M Enterprise GIS Platform with Web Accessibility SaaS & Enterprise Features - Monorepo",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
@@ -21,7 +21,17 @@
     "crates/accessibility-keyboard/ts",
     "crates/accessibility-aria/ts",
     "crates/accessibility-documents/ts",
-    "crates/accessibility-tenant/ts"
+    "crates/accessibility-tenant/ts",
+    "crates/enterprise-collaboration/ts",
+    "crates/enterprise-cad-editor/ts",
+    "crates/enterprise-analytics/ts",
+    "crates/enterprise-billing/ts",
+    "crates/enterprise-security/ts",
+    "crates/enterprise-compression/ts",
+    "crates/enterprise-workflow/ts",
+    "crates/enterprise-spatial/ts",
+    "crates/enterprise-gateway/ts",
+    "crates/enterprise-notifications/ts"
   ],
   "scripts": {
     "build": "turbo run build",
@@ -73,7 +83,20 @@
     "a11y",
     "enterprise",
     "saas",
-    "monorepo"
+    "monorepo",
+    "collaboration",
+    "cad",
+    "analytics",
+    "billing",
+    "security",
+    "soc2",
+    "hipaa",
+    "gdpr",
+    "workflow",
+    "spatial-analysis",
+    "api-gateway",
+    "notifications",
+    "fortune-500"
   ],
   "author": "HarborGrid",
   "license": "MIT",
